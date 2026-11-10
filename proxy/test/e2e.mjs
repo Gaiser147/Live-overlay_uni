@@ -4,6 +4,8 @@ import { readFileSync } from "node:fs";
 const base = process.env.BASE ?? "http://127.0.0.1:8790";
 const deck = JSON.parse(readFileSync(new URL("../../app/public/decks/demo/deck.json", import.meta.url)));
 let fails = 0;
+// Der Mock zählt alle Aufrufe seit seinem Start; nur die dieses Laufs prüfen.
+const callsBefore = (await (await fetch("http://127.0.0.1:8899/calls")).json()).length;
 const check = (name, ok, extra = "") => {
   console.log(`${ok ? "ok  " : "FAIL"} ${name}${extra ? "  " + extra : ""}`);
   if (!ok) fails++;
@@ -55,10 +57,10 @@ ws.close();
 
 const log = await (await fetch(`${base}/log/${session}`, { headers: { authorization: "Bearer pi-test" } })).text();
 const evs = log.trim().split("\n").map((l) => JSON.parse(l).ev);
-check("Protokoll enthält note, cost, answer, mark", ["note", "cost", "answer", "mark"].every((e) => evs.includes(e)), evs.join(","));
+check("Protokoll enthält note, cost, answer, mark", ["note", "cost", "answer", "mark"].every((e) => evs.includes(e)), `${evs.length} Ereignisse`);
 check("Protokoll ohne Transkripttext", !log.includes("Stellen Sie sich den Schatten"));
 
-const calls = await (await fetch("http://127.0.0.1:8899/calls")).json();
+const calls = (await (await fetch("http://127.0.0.1:8899/calls")).json()).slice(callsBefore);
 const haiku = calls.filter((c) => c.model === "claude-haiku-5-5");
 const sonnet = calls.filter((c) => c.model === "claude-sonnet-5-5");
 check("Haiku: Deck im Cache, Denken aus, JSON", haiku.length >= 2 && haiku.every((c) => c.system[1]?.cached && c.thinking?.type === "disabled" && c.format === "json_schema"));
