@@ -244,7 +244,7 @@ button {
 }
 
 .pos {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--ink-2);
 }
 
@@ -286,7 +286,7 @@ body[data-state="tafel"] .state-dot {
   align-items: center;
   gap: 4px;
   color: var(--ink-3);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .status-item {
@@ -467,7 +467,7 @@ body.fresh .margin {
 }
 
 .card.overflowing {
-  mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to bottom, var(--ground) calc(100% - 40px), transparent);
 }
 
 .card {
@@ -539,7 +539,7 @@ body.fresh .margin {
 
 .exam-off {
   font-family: var(--font-ui);
-  font-size: 15px;
+  font-size: 14px;
   color: var(--ink-3);
 }
 
@@ -554,7 +554,7 @@ body.fresh .margin {
 
 /* Klausurhinweis des Profs: Marginalie in Korrekturrot, gesetzt wie die übrigen Absätze. */
 .exam-flag {
-  font-size: 20px;
+  font-size: 21px;
   line-height: 1.4;
   color: var(--ink);
 }
@@ -585,7 +585,7 @@ body.fresh .margin {
   height: 12px;
   width: 70%;
   margin: 6px 0 12px;
-  border-radius: 3px;
+  border-radius: 1px;
   background: var(--rule);
 }
 
@@ -594,7 +594,7 @@ body.fresh .margin {
   display: block;
   height: 12px;
   width: 45%;
-  border-radius: 3px;
+  border-radius: 1px;
   background: var(--rule);
 }
 
@@ -633,7 +633,7 @@ body.fresh .margin {
 }
 
 .recap-here {
-  font-size: 26px;
+  font-size: 22px;
   line-height: 1.3;
 }
 
@@ -839,7 +839,7 @@ body[data-state="tafel"] .margin {
 }
 
 .board-msg .big {
-  font-size: 30px;
+  font-size: 31px;
   line-height: 1.25;
   color: var(--ink);
 }
@@ -867,7 +867,7 @@ body[data-state="tafel"] .board-msg {
 }
 
 .settings::backdrop {
-  background: oklch(0.1 0.02 262 / 0.7);
+  background: color-mix(in oklch, var(--ground) 82%, transparent);
 }
 
 .settings form {
@@ -884,7 +884,7 @@ body[data-state="tafel"] .board-msg {
 .settings .lead {
   margin: -8px 0 0;
   color: var(--ink-3);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.45;
 }
 
@@ -895,7 +895,7 @@ body[data-state="tafel"] .board-msg {
 
 .field label,
 .field legend {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--ink-2);
 }
@@ -969,7 +969,7 @@ body[data-state="tafel"] .board-msg {
   border: 1px solid var(--rule-strong);
   border-radius: 10px;
   background: var(--ground-raised);
-  font-size: 15px;
+  font-size: 14px;
   color: var(--ink-2);
   opacity: 0;
   transition: opacity 200ms var(--ease);
@@ -995,7 +995,7 @@ body[data-state="tafel"] .board-msg {
 
 .empty h2 {
   margin: 0;
-  font-size: 34px;
+  font-size: 31px;
   font-weight: 600;
   line-height: 1.15;
 }
@@ -1084,7 +1084,7 @@ body[data-state="tafel"] .board-msg {
   /* Bei halber Breite steht „Gleich: …“ als schmale Zeile über den Knöpfen. */
   .next {
     padding: 8px 16px 0;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .actions {

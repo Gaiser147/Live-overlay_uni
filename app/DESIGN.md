@@ -21,6 +21,11 @@ typography:
     fontSize: "31px"
     fontWeight: 400
     lineHeight: 1.28
+  card-glance-split:
+    fontFamily: "STIX Two Text, STIX Symbols, Noto Serif, serif"
+    fontSize: "26px"
+    fontWeight: 400
+    lineHeight: 1.28
   card-more:
     fontFamily: "STIX Two Text, STIX Symbols, Noto Serif, serif"
     fontSize: "22px"
@@ -176,8 +181,8 @@ Ein dunkler, leicht blauer Grund mit warmweißer Tinte und drei bedeutungstragen
 **Character:** Eine Buchschrift für alles, was gelesen wird, und eine Lesbarkeits-Grotesk für alles, was bedient wird. Die Grenze ist streng: Karte, Marginalie, Tafel-Hinweis und Leerzustand sind STIX; Register, Knöpfe, Einstellungen, Verweise und Metazeilen sind Atkinson. Überall gelten Tabellenziffern (`font-variant-numeric: tabular-nums` am body).
 
 ### Hierarchy
-- **Kernsatz** (`card-glance`, 400, 31 px, 1.28; 26 px im Splitscreen): der eine Satz der Karte, `text-wrap: pretty`.
-- **Genauer / Rückblick** (`card-more`, 22 px, 1.45; Rückblick-Kopf 26 px, 1.3): ausführliche Fassung auf Anfrage.
+- **Kernsatz** (`card-glance`, 400, 31 px, 1.28; im Splitscreen `card-glance-split`, 26 px): der eine Satz der Karte, `text-wrap: pretty`.
+- **Genauer / Rückblick** (`card-more`, 22 px, 1.45; auch der Rückblick-Kopf): ausführliche Fassung auf Anfrage.
 - **Beispiel, Regel** (`card-sub`, 21 px, 1.4; 19 px im Splitscreen).
 - **Marginalie** (`marginalia`, 19 px, 1.4; Klausur-Marginalie in der Karte 20 px).
 - **Einlauf** (`run-in-head`, 600, aufrecht): der fette Kopf jedes Absatzes.

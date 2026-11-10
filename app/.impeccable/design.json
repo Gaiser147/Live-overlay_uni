@@ -232,6 +232,11 @@
       "chrome-label": {
         "displayName": "Chrome-Label",
         "purpose": "Reiter, Zustand, Hinweise."
+      },
+      "card-glance-split": {
+        "displayName": "Kernsatz",
+        "purpose": "Der eine Satz der Karte; 26px im Splitscreen.",
+        "note": "Kernsatz im Splitscreen (≤ 900 px)"
       }
     },
     "shadows": [],
