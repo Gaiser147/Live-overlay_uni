@@ -1,0 +1,449 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-10T16:45:48+00:00",
+  "title": "Design System: Live-Overlay",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Tintenblau-Schwarz",
+        "canonical": "oklch(0.165 0.028 262)",
+        "tonalRamp": [
+          "oklch(0.15 0.012 262)",
+          "oklch(0.27 0.022 262)",
+          "oklch(0.39 0.03 262)",
+          "oklch(0.51 0.03 262)",
+          "oklch(0.63 0.03 262)",
+          "oklch(0.75 0.03 262)",
+          "oklch(0.86 0.027 262)",
+          "oklch(0.95 0.02 262)"
+        ]
+      },
+      "ground-raised": {
+        "role": "neutral",
+        "displayName": "Gehobener Grund",
+        "canonical": "oklch(0.2 0.032 262)",
+        "tonalRamp": [
+          "oklch(0.15 0.013 262)",
+          "oklch(0.27 0.023 262)",
+          "oklch(0.39 0.032 262)",
+          "oklch(0.51 0.032 262)",
+          "oklch(0.63 0.032 262)",
+          "oklch(0.75 0.032 262)",
+          "oklch(0.86 0.029 262)",
+          "oklch(0.95 0.021 262)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Haarlinie",
+        "canonical": "oklch(0.31 0.03 262)",
+        "tonalRamp": [
+          "oklch(0.15 0.012 262)",
+          "oklch(0.27 0.022 262)",
+          "oklch(0.39 0.03 262)",
+          "oklch(0.51 0.03 262)",
+          "oklch(0.63 0.03 262)",
+          "oklch(0.75 0.03 262)",
+          "oklch(0.86 0.027 262)",
+          "oklch(0.95 0.02 262)"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Kräftige Haarlinie",
+        "canonical": "oklch(0.42 0.03 262)",
+        "tonalRamp": [
+          "oklch(0.15 0.012 262)",
+          "oklch(0.27 0.022 262)",
+          "oklch(0.39 0.03 262)",
+          "oklch(0.51 0.03 262)",
+          "oklch(0.63 0.03 262)",
+          "oklch(0.75 0.03 262)",
+          "oklch(0.86 0.027 262)",
+          "oklch(0.95 0.02 262)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Papierweiß",
+        "canonical": "oklch(0.93 0.02 85)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 85)",
+          "oklch(0.27 0.014 85)",
+          "oklch(0.39 0.02 85)",
+          "oklch(0.51 0.02 85)",
+          "oklch(0.63 0.02 85)",
+          "oklch(0.75 0.02 85)",
+          "oklch(0.86 0.018 85)",
+          "oklch(0.95 0.013 85)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Papierweiß zweite Stufe",
+        "canonical": "oklch(0.8 0.02 85)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 85)",
+          "oklch(0.27 0.014 85)",
+          "oklch(0.39 0.02 85)",
+          "oklch(0.51 0.02 85)",
+          "oklch(0.63 0.02 85)",
+          "oklch(0.75 0.02 85)",
+          "oklch(0.86 0.018 85)",
+          "oklch(0.95 0.013 85)"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Blaugrau",
+        "canonical": "oklch(0.68 0.025 262)",
+        "tonalRamp": [
+          "oklch(0.15 0.01 262)",
+          "oklch(0.27 0.018 262)",
+          "oklch(0.39 0.025 262)",
+          "oklch(0.51 0.025 262)",
+          "oklch(0.63 0.025 262)",
+          "oklch(0.75 0.025 262)",
+          "oklch(0.86 0.023 262)",
+          "oklch(0.95 0.017 262)"
+        ]
+      },
+      "here": {
+        "role": "primary",
+        "displayName": "Springer-Gelb",
+        "canonical": "oklch(0.84 0.155 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.062 88)",
+          "oklch(0.27 0.112 88)",
+          "oklch(0.39 0.155 88)",
+          "oklch(0.51 0.155 88)",
+          "oklch(0.63 0.155 88)",
+          "oklch(0.75 0.155 88)",
+          "oklch(0.86 0.141 88)",
+          "oklch(0.95 0.103 88)"
+        ]
+      },
+      "here-ink": {
+        "role": "primary",
+        "displayName": "Gelb-Tinte",
+        "canonical": "oklch(0.2 0.04 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.016 88)",
+          "oklch(0.27 0.029 88)",
+          "oklch(0.39 0.04 88)",
+          "oklch(0.51 0.04 88)",
+          "oklch(0.63 0.04 88)",
+          "oklch(0.75 0.04 88)",
+          "oklch(0.86 0.036 88)",
+          "oklch(0.95 0.027 88)"
+        ]
+      },
+      "here-dim": {
+        "role": "primary",
+        "displayName": "Gedämpftes Gelb",
+        "canonical": "oklch(0.6 0.1 88)",
+        "tonalRamp": [
+          "oklch(0.15 0.04 88)",
+          "oklch(0.27 0.072 88)",
+          "oklch(0.39 0.1 88)",
+          "oklch(0.51 0.1 88)",
+          "oklch(0.63 0.1 88)",
+          "oklch(0.75 0.1 88)",
+          "oklch(0.86 0.091 88)",
+          "oklch(0.95 0.067 88)"
+        ]
+      },
+      "marker": {
+        "role": "primary",
+        "displayName": "Textmarker-Gelb",
+        "canonical": "oklch(0.86 0.17 95)",
+        "tonalRamp": [
+          "oklch(0.15 0.068 95)",
+          "oklch(0.27 0.122 95)",
+          "oklch(0.39 0.17 95)",
+          "oklch(0.51 0.17 95)",
+          "oklch(0.63 0.17 95)",
+          "oklch(0.75 0.17 95)",
+          "oklch(0.86 0.154 95)",
+          "oklch(0.95 0.113 95)"
+        ]
+      },
+      "exam": {
+        "role": "secondary",
+        "displayName": "Korrekturrot",
+        "canonical": "oklch(0.7 0.165 32)",
+        "tonalRamp": [
+          "oklch(0.15 0.066 32)",
+          "oklch(0.27 0.119 32)",
+          "oklch(0.39 0.165 32)",
+          "oklch(0.51 0.165 32)",
+          "oklch(0.63 0.165 32)",
+          "oklch(0.75 0.165 32)",
+          "oklch(0.86 0.15 32)",
+          "oklch(0.95 0.11 32)"
+        ]
+      },
+      "unsure": {
+        "role": "tertiary",
+        "displayName": "Schiefer",
+        "canonical": "oklch(0.62 0.02 262)",
+        "tonalRamp": [
+          "oklch(0.15 0.008 262)",
+          "oklch(0.27 0.014 262)",
+          "oklch(0.39 0.02 262)",
+          "oklch(0.51 0.02 262)",
+          "oklch(0.63 0.02 262)",
+          "oklch(0.75 0.02 262)",
+          "oklch(0.86 0.018 262)",
+          "oklch(0.95 0.013 262)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "card-glance": {
+        "displayName": "Kernsatz",
+        "purpose": "Der eine Satz der Karte; 26px im Splitscreen."
+      },
+      "card-more": {
+        "displayName": "Genauer / Rückblick",
+        "purpose": "Ausführliche Fassung auf Anfrage."
+      },
+      "card-sub": {
+        "displayName": "Beispiel, Regel",
+        "purpose": "Absätze unter dem Kernsatz; 19px im Splitscreen."
+      },
+      "marginalia": {
+        "displayName": "Marginalie",
+        "purpose": "Live-Notizen im Format „Kopf, HH:MM.“"
+      },
+      "run-in-head": {
+        "displayName": "Einlauf",
+        "purpose": "Fetter, aufrechter Kopf jedes Absatzes."
+      },
+      "chrome-action": {
+        "displayName": "Chrome-Aktion",
+        "purpose": "Knopfbeschriftung, Folienposition."
+      },
+      "chrome-body": {
+        "displayName": "Chrome-Text",
+        "purpose": "Felder, Abschnittsliste im Rückblick."
+      },
+      "chrome-label": {
+        "displayName": "Chrome-Label",
+        "purpose": "Reiter, Zustand, Hinweise."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Einzige Kurve für alle Zustandswechsel."
+      },
+      {
+        "name": "duration-control",
+        "value": "150ms",
+        "purpose": "Knopfflächen und -konturen."
+      },
+      {
+        "name": "duration-mark",
+        "value": "200ms",
+        "purpose": "Registerstriche, Begriffs-Unterstreichung, Toast."
+      },
+      {
+        "name": "duration-zone",
+        "value": "250ms",
+        "purpose": "Deckkraft von Folie und Marginalspalte (Tafelmodus), frischer Randstrich, Kopffarben."
+      },
+      {
+        "name": "fresh-hold",
+        "value": "8000ms",
+        "purpose": "Gelber Randstrich einer neuen Karte, bis getippt wird."
+      },
+      {
+        "name": "card-change-max-delay",
+        "value": "4000ms",
+        "purpose": "Kartenwechsel wartet auf eine Sprechpause, höchstens so lange."
+      },
+      {
+        "name": "term-flash",
+        "value": "4000ms",
+        "purpose": "Sichtdauer der gelben Unterstreichung eines gefallenen Begriffs."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0ms",
+        "purpose": "prefers-reduced-motion: reduce setzt alle Übergänge auf 0."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "split",
+        "value": "900px",
+        "purpose": "≤ 900px: Folie oben (max. 46dvh), Karte darunter, Register nur mit aktuellem Reiternamen."
+      }
+    ],
+    "nightSlideFilter": {
+      "id": "night",
+      "steps": [
+        "feColorMatrix invert",
+        "hueRotate 180",
+        "saturate 0.5",
+        "feComponentTransfer table 0 0.14 0.24 0.34 0.92"
+      ],
+      "blend": "screen on ground",
+      "originalLook": "brightness(0.62)"
+    },
+    "focus": {
+      "value": "outline: 2px solid var(--here); outline-offset: 2px",
+      "fields": "outline-offset: 1px"
+    },
+    "hairline": {
+      "value": "1px solid var(--rule)",
+      "purpose": "Einziger Zonentrenner."
+    }
+  },
+  "components": [
+    {
+      "name": "Aktionsknopf",
+      "kind": "button",
+      "refersTo": "button-action",
+      "description": "56px hoher Konturknopf der Fußleiste (Genauer, Faden verloren).",
+      "html": "<button class=\"ds-btn\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\"/><path d=\"M12 17h.01\"/></svg>Genauer</button>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-btn{font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;justify-content:center;gap:9px;height:56px;padding:0 14px;border:1px solid var(--rule-strong);border-radius:10px;background:transparent;font-size:17px;font-weight:600;color:var(--ink);cursor:pointer;transition:background-color 150ms var(--ease),border-color 150ms var(--ease)}.ds-btn:hover{background:var(--ground-raised)}.ds-btn:active{background:var(--rule)}.ds-btn:focus-visible{outline:2px solid var(--here);outline-offset:2px}"
+    },
+    {
+      "name": "Aktionsknopf gedrückt",
+      "kind": "button",
+      "refersTo": "button-action-pressed",
+      "description": "Panel offen: kräftigere Kontur, keine Füllung in Akzentfarbe.",
+      "html": "<button class=\"ds-btn-pressed\" aria-pressed=\"true\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\"/><path d=\"M12 17h.01\"/></svg>Genauer</button>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-btn-pressed{font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;justify-content:center;gap:9px;height:56px;padding:0 14px;border:1px solid var(--ink-2);border-radius:10px;background:var(--rule);font-size:17px;font-weight:600;color:var(--ink);cursor:pointer}.ds-btn-pressed:focus-visible{outline:2px solid var(--here);outline-offset:2px}"
+    },
+    {
+      "name": "Hauptaktion",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Speichern im Dialog: Kontur statt Füllung.",
+      "html": "<button class=\"ds-btn-primary\">Speichern</button>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-btn-primary{font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-variant-numeric:tabular-nums;height:56px;padding:0 14px;border:1px solid var(--ink-2);border-radius:10px;background:var(--ground-raised);font-size:17px;font-weight:600;color:var(--ink);cursor:pointer;transition:background-color 150ms var(--ease)}.ds-btn-primary:hover{background:var(--rule)}.ds-btn-primary:focus-visible{outline:2px solid var(--here);outline-offset:2px}"
+    },
+    {
+      "name": "Icon-Knopf",
+      "kind": "button",
+      "refersTo": "icon-button",
+      "description": "48px Registerknopf (Mikrofon, Einstellungen).",
+      "html": "<button class=\"ds-icon-btn\" aria-label=\"Einstellungen\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg></button>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-icon-btn{display:grid;place-items:center;width:48px;height:48px;border:0;border-radius:8px;background:transparent;color:var(--ink-2);cursor:pointer}.ds-icon-btn:hover{background:var(--rule)}.ds-icon-btn:active{background:var(--rule-strong)}.ds-icon-btn:focus-visible{outline:2px solid var(--here);outline-offset:2px}"
+    },
+    {
+      "name": "Feld",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Einstellungsfeld mit Label darüber und Hinweis darunter.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-proxy\">Proxy-Adresse</label><input id=\"ds-proxy\" placeholder=\"https://…workers.dev\"><p>Ohne Proxy laufen Karten trotzdem.</p></div>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-field{font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-variant-numeric:tabular-nums;display:grid;gap:7px;width:280px}.ds-field label{font-size:15px;font-weight:600;color:var(--ink-2)}.ds-field input{height:48px;padding:0 12px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--ground);color:var(--ink);font:inherit;font-size:16px}.ds-field input::placeholder{color:var(--ink-3)}.ds-field input:focus-visible{outline:2px solid var(--here);outline-offset:1px}.ds-field p{margin:0;font-size:14px;color:var(--ink-3)}"
+    },
+    {
+      "name": "Daumenregister",
+      "kind": "nav",
+      "refersTo": "register-tab",
+      "description": "Signatur: Reiter so breit wie ihre Folienzahl, ein Strich je Folie; gelb = aktuelle Folie, rot = Klausur.",
+      "html": "<nav class=\"ds-reg\"><button class=\"ds-tab\" data-status=\"done\" style=\"flex:2 1 0\"><span class=\"ds-tl\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>Einstieg</span><span class=\"ds-ticks\"><i data-s=\"done\"></i><i data-s=\"done\"></i></span></button><button class=\"ds-tab\" data-status=\"current\" style=\"flex:6 1 0\"><span class=\"ds-tl\">Lineare Abbildungen</span><span class=\"ds-ticks\"><i data-s=\"done\" data-exam=\"1\"></i><i data-s=\"done\"></i><i data-s=\"done\"></i><i data-s=\"done\"></i><i data-s=\"current\"></i><i></i></span></button><button class=\"ds-tab\" style=\"flex:4 1 0\"><span class=\"ds-tl\">Matrizen</span><span class=\"ds-ticks\"><i></i><i></i><i></i><i></i></span></button><span class=\"ds-where\">Folie <b>7</b> / 12 <span class=\"ds-dot\"></span> folgt</span></nav>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-reg{font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-variant-numeric:tabular-nums;display:flex;height:56px;width:640px;background:var(--ground-raised);border-bottom:1px solid var(--rule)}.ds-tab{position:relative;display:flex;flex-direction:column;justify-content:center;gap:7px;min-width:0;padding:0 12px;border:0;border-right:1px solid var(--rule);background:transparent;text-align:left;cursor:pointer;font:inherit}.ds-tab:focus-visible{outline:2px solid var(--here);outline-offset:-2px}.ds-tl{display:flex;align-items:center;gap:6px;font-size:14px;line-height:1;color:var(--ink-3);white-space:nowrap;overflow:hidden}.ds-tab[data-status=done] .ds-tl{color:var(--ink-2)}.ds-tab[data-status=current]{background:var(--ground)}.ds-tab[data-status=current]::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--ground)}.ds-tab[data-status=current] .ds-tl{color:var(--ink);font-weight:600}.ds-ticks{display:flex;gap:2px;height:6px}.ds-ticks i{flex:1;border-radius:1px;background:var(--rule);transition:background-color 200ms var(--ease)}.ds-ticks i[data-s=done]{background:var(--rule-strong)}.ds-ticks i[data-s=current]{background:var(--here)}.ds-ticks i[data-exam='1']{background:var(--exam)}.ds-where{display:flex;align-items:center;gap:8px;padding:0 14px;white-space:nowrap;font-size:15px;color:var(--ink-2)}.ds-where b{font-size:17px;font-weight:600;color:var(--ink)}.ds-dot{width:9px;height:9px;border-radius:50%;background:var(--here)}"
+    },
+    {
+      "name": "Karte",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Lehrbuch-Umgebung: fetter Einlauf, kursives Thema, Beispiel (ausgedacht), Regel, Endzeichen ◇; frischer Randstrich gelb.",
+      "html": "<article class=\"ds-card\"><p class=\"ds-glance\"><b>Beispiel</b><span class=\"ds-topic\"> (Projektion auf die x-Achse)</span>. Lot auf die x-Achse fällen: y wird 0, x bleibt.</p><p class=\"ds-sub ds-end\"><b>Beispiel</b><i> (ausgedacht)</i>. (4; 3) → (4; 0).</p><p class=\"ds-note\"><b>Prof, 10:06.</b> Projektion = Schatten von oben.</p></article>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-card{font-family:'STIX Two Text','STIX Symbols','Noto Serif',serif;width:420px;padding:28px 28px 20px;background:var(--ground);border-left:1px solid var(--here);color:var(--ink);transition:border-color 250ms var(--ease)}.ds-card:hover{border-left-color:var(--rule)}.ds-card p{margin:0}.ds-card>*+*{margin-top:20px}.ds-glance{font-size:31px;line-height:1.28}.ds-card b{font-weight:600}.ds-topic{font-style:italic;color:var(--ink-2)}.ds-sub{font-size:21px;line-height:1.4;color:var(--ink-2)}.ds-sub b{color:var(--ink)}.ds-end::after{content:' ◇';color:var(--ink-3);font-size:.8em}.ds-note{padding-top:16px;border-top:1px solid var(--rule);font-size:19px;line-height:1.4;color:var(--ink-2)}.ds-note b{color:var(--ink)}"
+    },
+    {
+      "name": "Klausur-Marginalie",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Marginalie „Klausur, HH:MM.“ mit Einlauf in Korrekturrot, kein Etikett.",
+      "html": "<p class=\"ds-exam\"><b>Klausur, 10:12.</b> Das kommt laut Prof so in der Klausur dran.</p>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-exam{font-family:'STIX Two Text','STIX Symbols','Noto Serif',serif;margin:0;width:380px;font-size:20px;line-height:1.4;color:var(--ink);background:var(--ground);padding:16px}.ds-exam b{font-weight:600;color:var(--exam)}"
+    },
+    {
+      "name": "Zustandspunkt",
+      "kind": "chip",
+      "refersTo": "register-tab",
+      "description": "folgt (gelb), unsicher/manuell (hohler Schieferring), tafel (ink-3).",
+      "html": "<div class=\"ds-states\"><span><i class=\"ds-sd\" data-s=\"folgt\"></i>folgt</span><span><i class=\"ds-sd\" data-s=\"unsicher\"></i>unsicher</span><span><i class=\"ds-sd\" data-s=\"tafel\"></i>Tafel</span><span><i class=\"ds-sd\" data-s=\"manuell\"></i>von Hand</span></div>",
+      "css": ":root{--ground:oklch(0.165 0.028 262);--ground-raised:oklch(0.2 0.032 262);--rule:oklch(0.31 0.03 262);--rule-strong:oklch(0.42 0.03 262);--ink:oklch(0.93 0.02 85);--ink-2:oklch(0.8 0.02 85);--ink-3:oklch(0.68 0.025 262);--here:oklch(0.84 0.155 88);--exam:oklch(0.7 0.165 32);--unsure:oklch(0.62 0.02 262);--ease:cubic-bezier(0.16,1,0.3,1)}.ds-states{font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-variant-numeric:tabular-nums;display:flex;gap:18px;padding:12px;background:var(--ground-raised);font-size:14px;color:var(--ink-3)}.ds-states span{display:flex;align-items:center;gap:7px}.ds-sd{width:9px;height:9px;border-radius:50%;background:var(--here)}.ds-sd[data-s=unsicher],.ds-sd[data-s=manuell]{background:transparent;box-shadow:inset 0 0 0 2px var(--unsure)}.ds-sd[data-s=tafel]{background:var(--ink-3)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Der Lehrbuch-Satz auf Tintenblau",
+    "overview": "Live-Overlay setzt jede Folie als Absatz eines Lehrbuchs: fetter Einlauf, kursives Thema, Endzeichen. Live läuft kein Text durch, es steht eine gesetzte Karte da. Die Welt ist ein einziger tintenblau-schwarzer Grund, auf dem Licht nur aus warmweißem Text und einer Akzentfarbe kommt. Sie ist für den dunklen Hörsaal gebaut, für einen Blick von zwei bis drei Sekunden aus Armlänge, und hält deshalb Nachtsicht-Disziplin: keine hellen Flächen, die Folie selbst wird invertiert gezeigt.\n\nDie Fläche wird durch 1-px-Haarlinien in Zonen geteilt, nicht durch Kästen oder Schatten. Oben liegt das Daumenregister, links die Nachtfolie, rechts die Marginalspalte mit Karte und Live-Notizen, unten „Gleich: …“ und zwei große Knöpfe. Die Dichte ist niedrig, die Schrift groß. Bedeutung trägt die Farbe nur in drei Rollen: Gelb heißt „hier bist du“, Korrekturrot heißt Klausur, Schiefer heißt unsicher.\n\nAbgelehnt ist der Standard der Kategorie: eine dunkle Transkript-Spalte mit laufendem Text, Chat-Blasen und blauem Akzent.",
+    "keyCharacteristics": [
+      "Ein Grund (Tintenblau-Schwarz), Text in Papier-Warmweiß in drei Stufen.",
+      "Gelb ausschließlich für „hier bist du“.",
+      "Zonen nur durch 1-px-Haarlinien; keine Elevation, keine Schatten.",
+      "Karten und Marginalien in STIX Two Text als Lehrbuch-Umgebung; Chrome in Atkinson Hyperlegible Next mit Tabellenziffern.",
+      "Daumenregister als Signatur: Fortschritt und Position in einem.",
+      "Bewegung nur als Zustandswechsel, 150–250 ms."
+    ],
+    "rules": [
+      {
+        "name": "The Here Rule",
+        "body": "Gelb bedeutet nur „hier bist du“ (oder „hier ist der Prof“). Gedrückte Knöpfe, Hauptaktionen und Hinweise bekommen kein Gelb.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three Meanings Rule",
+        "body": "Gelb, Korrekturrot und Schiefer tragen je genau eine Bedeutung. Keine Farbe springt für eine andere ein, keine vierte Akzentfarbe kommt hinzu.",
+        "section": "colors"
+      },
+      {
+        "name": "The Night-Vision Rule",
+        "body": "Licht kommt nur aus Text und Akzent. Keine Fläche ist heller als `ground-raised`.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Hands Rule",
+        "body": "STIX für das, was man liest; Atkinson für das, was man bedient. Eine Karte enthält Atkinson nur für Metazeilen (Verweis, „nicht klausurrelevant“).",
+        "section": "typography"
+      },
+      {
+        "name": "The Unbroken Formula Rule",
+        "body": "Formeln brechen nicht mitten im Ausdruck: Leerzeichen in Klammern und vor Operatoren (= → ↦ ≠ ≤ ≥ + − · ×) werden geschützt, nach = und → nur, wenn der rechte Teil kurz ist (≤ 10 Zeichen). Umbruch bleibt nach + und nach Satzenden.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline Zoning Rule",
+        "body": "Zonen trennt eine 1-px-Linie in `rule`. Keine Kästen um Inhalte, keine farbigen Panels, keine Abstände als einziger Trenner zwischen Register, Folie, Marginalspalte und Fußleiste.",
+        "section": "layout"
+      },
+      {
+        "name": "The No-Lift Rule",
+        "body": "Kein Element wirft einen Schatten oder schwebt. Was aktiv ist, wird heller im Text oder bekommt eine kräftigere Kontur.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do setze jeden Karten- und Notizabsatz mit fettem, aufrechtem Einlauf und Punkt („Definition *(Thema)*. …“, „Prof, 10:06. …“) und schließe die Karte mit ◇.",
+      "Do halte Gelb (`here`) für „hier bist du“ allein: aktueller Strich, aktiver Abschnitt, Punkt „folgt“, frischer Randstrich, gefallener Begriff, Fokus.",
+      "Do markiere Klausur doppelt: roter Strich im Register und rote Marginalie in der Karte.",
+      "Do trenne Zonen mit 1-px-Haarlinien in `rule`; Konturen in `rule-strong`.",
+      "Do zeige Folien als Nachtfolie über den Filter `#night` auf `ground`.",
+      "Do halte Aktionsknöpfe 56 px hoch und Icon-Knöpfe mindestens 48 px.",
+      "Do begrenze Bewegung auf Zustandswechsel von 150–250 ms und respektiere `prefers-reduced-motion`.",
+      "Do nutze Tabellenziffern in jeder Zahl, die sich ändert (Folie n / N, Uhrzeiten)."
+    ],
+    "donts": [
+      "Don't fülle Flächen hell: keine Knopf-, Chip- oder Bannerfüllung in Gelb, Rot oder Weiß; Hauptaktionen bekommen eine Kontur.",
+      "Don't setze Schatten oder Elevation; Inset-Ringe für hohle Punkte sind die einzige erlaubte `box-shadow`-Verwendung.",
+      "Don't setze Etiketten über Überschriften oder Absätze (kein „KLAUSUR“-Label über dem Text); der Kopf läuft in den Absatz ein.",
+      "Don't lass Text live durchlaufen oder setze Chat-Blasen; die Karte steht gesetzt da.",
+      "Don't verwende Korrekturrot für etwas anderes als Klausur oder Schiefer für etwas anderes als unsicher.",
+      "Don't brich Formeln mitten im Ausdruck um.",
+      "Don't mische Atkinson in den Lesetext der Karte oder STIX ins Chrome."
+    ]
+  }
+}

@@ -108,6 +108,7 @@ export class Register {
     );
     this.micBtn.title = this.micBtn.getAttribute("aria-label")!;
     this.micBtn.replaceChildren(icon(on ? "mic" : "micOff"));
-    this.micBtn.style.color = state === "silenced" || state === "denied" || state === "error" ? "var(--exam)" : "";
+    // Rot bleibt der Klausur vorbehalten: Störungen zeigt das durchgestrichene Mikro plus Hinweistext.
+    this.micBtn.dataset.problem = String(state === "silenced" || state === "denied" || state === "error");
   }
 }
