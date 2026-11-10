@@ -56,7 +56,17 @@ export class Margin {
       h("p", { class: "big" }, "Prof zeichnet – schau nach vorn."),
       h("p", { class: "small" }, "Die Karte kommt zurück, sobald es weitergeht."),
     );
-    this.el = h("aside", { class: "margin", "aria-label": "Karte" }, this.body, this.live, this.boardMsg);
+    this.el = h("aside", { class: "margin", "aria-label": "Karte", "data-mode": "card" }, this.body, this.live, this.boardMsg);
+    // Läuft der Text über, blendet der untere Rand aus: Man sieht, dass es weitergeht.
+    const check = () => this.body.classList.toggle("overflowing", this.body.scrollHeight - this.body.scrollTop - this.body.clientHeight > 4);
+    new ResizeObserver(check).observe(this.body);
+    new MutationObserver(check).observe(this.body, { childList: true, subtree: true, characterData: true });
+    this.body.addEventListener("scroll", check, { passive: true });
+  }
+
+  private setMode(mode: MarginMode): void {
+    this.mode = mode;
+    this.el.dataset.mode = mode;
   }
 
   /** Klausurhinweis zu Folie n, mit Uhrzeit und Wortlaut (bleibt für die Sitzung gespeichert). */
@@ -71,7 +81,7 @@ export class Margin {
   }
 
   showCard(slide: Slide): void {
-    this.mode = "card";
+    this.setMode("card");
     const b = this.body;
     b.dataset.kind = slide.kind;
     b.dataset.exam = slide.exam_relevant ? "on" : "off";
@@ -109,14 +119,14 @@ export class Margin {
     if (!slide.exam_relevant) parts.push(h("p", { class: "exam-off" }, slide.exam_note ?? "Laut Folie nicht klausurrelevant"));
     // Klausurhinweis des Profs: eine Marginalie in Korrekturrot am Ende der Karte (dazu der rote Strich im Register).
     const exam = this.examSlides.get(slide.n);
-    if (exam) parts.push(h("p", { class: "exam-flag" }, h("b", { class: "head" }, "Klausur"), ` (${clock(exam.t)}). `, exam.text));
+    if (exam) parts.push(h("p", { class: "exam-flag" }, h("b", { class: "head" }, `Klausur, ${clock(exam.t)}.`), " ", exam.text));
     b.replaceChildren(...parts);
     b.scrollTop = 0;
   }
 
   /** „Genauer“: vorbereitete Erklärung sofort, frische Erklärung des Proxys darunter, sobald sie da ist. */
   showMore(slide: Slide, fresh: Promise<string | null> | null): void {
-    this.mode = "more";
+    this.setMode("more");
     this.body.dataset.exam = "on";
     const answer = fresh ? h("p", { class: "fresh-answer", "data-loading": "" }) : null;
     this.body.replaceChildren(
@@ -134,7 +144,7 @@ export class Margin {
   }
 
   showRecap(r: Recap, fresh: Promise<string[] | null> | null): void {
-    this.mode = "recap";
+    this.setMode("recap");
     this.body.dataset.exam = "on";
     const item = (p: { ref?: string; text: string }) => h("li", {}, p.ref ? h("span", { class: "ref" }, p.ref) : null, mathText(p.text));
     const list = h("ol", { class: "recap-points" }, ...r.points.map(item));
@@ -158,7 +168,7 @@ export class Margin {
   }
 
   showCircle(slide: Slide, excerpt: string, fresh: Promise<string | null> | null): void {
-    this.mode = "circle";
+    this.setMode("circle");
     this.body.dataset.exam = "on";
     const answer = h("p", { class: "fresh-answer", "data-loading": fresh ? "" : null });
     this.body.replaceChildren(

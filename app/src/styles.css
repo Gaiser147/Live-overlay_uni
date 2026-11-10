@@ -319,9 +319,9 @@ body[data-state="tafel"] .state-dot {
   background: var(--rule-strong);
 }
 
+/* Gedrückt (Zuhören läuft): hellere Ikone, keine Kachel – das Symbol selbst trägt den Zustand. */
 .icon-btn[aria-pressed="true"] {
   color: var(--ink);
-  background: var(--rule);
 }
 
 .follow-btn {
@@ -464,6 +464,10 @@ body[data-slide-look="original"] .slide img {
 /* Neue Karte: Die Haarlinie zur Folie wird gelb, bis du hinschaust. */
 body.fresh .margin {
   border-left-color: var(--here);
+}
+
+.card.overflowing {
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
 }
 
 .card {
@@ -1066,6 +1070,11 @@ body[data-state="tafel"] .board-msg {
 
   .live {
     padding: 12px 20px;
+  }
+
+  /* Bei halber Breite gehört der Platz dem geöffneten Panel; die Notizen kommen mit der Karte zurück. */
+  .margin:not([data-mode="card"]) .live {
+    display: none;
   }
 
   .bar {
