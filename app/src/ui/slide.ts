@@ -25,8 +25,9 @@ function nightFilter(): Node {
     // Farbige Flächen (Beamer-Blöcke) entsättigen, sonst leuchten sie nach dem Invertieren.
     s("feColorMatrix", { type: "saturate", values: "0.5" }),
   );
+  // Mittlere bis helle Töne (invertierte Blockköpfe, ~0,45–0,8) stark drücken, Weiß (Schrift) bleibt hell.
   const ct = s("feComponentTransfer");
-  for (const ch of ["feFuncR", "feFuncG", "feFuncB"] as const) ct.append(s(ch, { type: "gamma", amplitude: 0.92, exponent: 1.5, offset: 0 }));
+  for (const ch of ["feFuncR", "feFuncG", "feFuncB"] as const) ct.append(s(ch, { type: "table", tableValues: "0 0.14 0.24 0.34 0.92" }));
   f.append(ct);
   svg.append(f);
   return svg as unknown as Node;
@@ -107,6 +108,12 @@ export class SlideView {
       line.classList.remove("on");
       setTimeout(() => line.remove(), 300);
     }, 4000);
+  }
+
+  /** Kreis und Markierung des S Pen entfernen (anderes Panel geöffnet oder zurück zur Karte). */
+  clearCircle(): void {
+    this.ink.replaceChildren();
+    for (const el of [...this.overlay.querySelectorAll(".circled")]) el.remove();
   }
 
   private markCircled(blocks: TextBlock[]): void {

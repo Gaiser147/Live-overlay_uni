@@ -5,15 +5,29 @@ import { clock, h, icon } from "./dom.ts";
 
 export type MarginMode = "card" | "more" | "recap" | "circle";
 
-export type NoteKind = "note" | "exam" | "link" | "board" | "offtopic";
+export type NoteKind = "note" | "exam" | "examOff" | "link" | "board" | "offtopic";
 
-const NOTE_WHO: Record<NoteKind, string> = {
+/** Kopf der Marginalie, als fetter Einlauf wie im Lehrbuch. */
+const NOTE_HEAD: Record<NoteKind, string> = {
   note: "Prof",
-  exam: "Klausurhinweis",
+  exam: "Klausur",
+  examOff: "Klausur",
   link: "Verweis",
   board: "Tafel",
   offtopic: "Nebengespräch",
 };
+
+/**
+ * Formeln nicht mitten im Ausdruck umbrechen: Leerzeichen in Klammern und vor Operatoren werden
+ * geschützt, nach = und → nur, wenn der rechte Teil kurz ist. Umbruch bleibt nach + und nach Satzenden.
+ */
+export function mathText(s: string): string {
+  const NB = "\u00a0";
+  let out = s.replace(/\(([^()]{0,24})\)/g, (m) => m.replace(/ /g, NB));
+  out = out.replace(/ (=|→|↦|≠|≤|≥|\+|−|·|×) /g, `${NB}$1 `);
+  out = out.replace(/(=|→|↦) (\S{1,10})(?=[\s.,;]|$)/g, `$1${NB}$2`);
+  return out;
+}
 
 export interface Recap {
   here: string;
@@ -45,11 +59,11 @@ export class Margin {
     this.el = h("aside", { class: "margin", "aria-label": "Karte" }, this.body, this.live, this.boardMsg);
   }
 
-  /** Klausurhinweis zu Folie n, mit Uhrzeit (bleibt für die Sitzung gespeichert). */
-  private examSlides = new Map<number, number>();
+  /** Klausurhinweis zu Folie n, mit Uhrzeit und Wortlaut (bleibt für die Sitzung gespeichert). */
+  private examSlides = new Map<number, { t: number; text: string }>();
 
-  markExam(n: number, t: number): void {
-    if (!this.examSlides.has(n)) this.examSlides.set(n, t);
+  markExam(n: number, t: number, text: string): void {
+    if (!this.examSlides.has(n)) this.examSlides.set(n, { t, text });
   }
 
   hasExam(n: number): boolean {
@@ -73,7 +87,7 @@ export class Margin {
         h("b", { class: "head" }, head),
         showTopic ? h("span", { class: "topic" }, ` (${topic})`) : null,
         ". ",
-        slide.glance,
+        mathText(slide.glance),
       ),
     );
     if (slide.example) {
@@ -84,17 +98,18 @@ export class Margin {
           h("b", { class: "head" }, "Beispiel"),
           slide.example.invented ? h("span", { class: "tag" }, " (ausgedacht)") : null,
           ". ",
-          slide.example.text,
+          mathText(slide.example.text),
         ),
       );
     }
     if (slide.rule) {
       const isHint = slide.kind === "task";
-      parts.push(h("p", { class: "sub end" }, h("b", { class: "head" }, isHint ? "Lösungsweg" : "Regel"), ". ", slide.rule.replace(/^Lösungsweg:\s*/i, "")));
+      parts.push(h("p", { class: "sub end" }, h("b", { class: "head" }, isHint ? "Lösungsweg" : "Regel"), ". ", mathText(slide.rule.replace(/^Lösungsweg:\s*/i, ""))));
     }
     if (!slide.exam_relevant) parts.push(h("p", { class: "exam-off" }, slide.exam_note ?? "Laut Folie nicht klausurrelevant"));
-    const examAt = this.examSlides.get(slide.n);
-    if (examAt !== undefined) parts.push(h("p", { class: "exam-flag" }, icon("exam"), `Klausurhinweis des Profs um ${clock(examAt)}`));
+    // Klausurhinweis des Profs: eine Marginalie in Korrekturrot am Ende der Karte (dazu der rote Strich im Register).
+    const exam = this.examSlides.get(slide.n);
+    if (exam) parts.push(h("p", { class: "exam-flag" }, h("b", { class: "head" }, "Klausur"), ` (${clock(exam.t)}). `, exam.text));
     b.replaceChildren(...parts);
     b.scrollTop = 0;
   }
@@ -105,14 +120,14 @@ export class Margin {
     this.body.dataset.exam = "on";
     const answer = fresh ? h("p", { class: "fresh-answer", "data-loading": "" }) : null;
     this.body.replaceChildren(
-      h("p", { class: "more" }, h("b", { class: "head" }, "Genauer"), h("span", { class: "topic" }, ` (${topicOf(slide)})`), ". ", slide.more),
+      h("p", { class: "more" }, h("b", { class: "head" }, "Genauer"), h("span", { class: "topic" }, ` (${topicOf(slide)})`), ". ", mathText(slide.more)),
       ...(answer ? [answer] : []),
     );
     if (fresh && answer) {
       void fresh.then((text) => {
         if (this.mode !== "more") return;
         answer.removeAttribute("data-loading");
-        if (text) answer.replaceChildren(h("b", { class: "head" }, "Mit dem Vortrag"), ". ", text);
+        if (text) answer.replaceChildren(h("b", { class: "head" }, "Mit dem Vortrag"), ". ", mathText(text));
         else answer.remove();
       });
     }
@@ -121,7 +136,7 @@ export class Margin {
   showRecap(r: Recap, fresh: Promise<string[] | null> | null): void {
     this.mode = "recap";
     this.body.dataset.exam = "on";
-    const item = (p: { ref?: string; text: string }) => h("li", {}, p.ref ? h("span", { class: "ref" }, p.ref) : null, p.text);
+    const item = (p: { ref?: string; text: string }) => h("li", {}, p.ref ? h("span", { class: "ref" }, p.ref) : null, mathText(p.text));
     const list = h("ol", { class: "recap-points" }, ...r.points.map(item));
     this.body.replaceChildren(
       h("p", { class: "recap-here" }, r.here),
@@ -147,7 +162,7 @@ export class Margin {
     this.body.dataset.exam = "on";
     const answer = h("p", { class: "fresh-answer", "data-loading": fresh ? "" : null });
     this.body.replaceChildren(
-      h("p", { class: "more" }, h("b", { class: "head" }, "Zu dieser Stelle"), ". ", excerpt || "Hier steht kein Text – frag lieber mit „Genauer“."),
+      h("p", { class: "more" }, h("b", { class: "head" }, "Zu dieser Stelle"), ". ", excerpt ? mathText(excerpt) : "Hier steht kein Text – frag lieber mit „Genauer“."),
       answer,
     );
     if (!fresh) {
@@ -161,8 +176,9 @@ export class Margin {
     });
   }
 
+  /** Live-Notiz als Marginalie: „**Prof, 10:06.** Projektion = Schatten …“ */
   addNote(kind: NoteKind, text: string, t: number): void {
-    const note = h("p", { class: "live-note", "data-type": kind, "data-t": t }, h("span", { class: "who" }, `${NOTE_WHO[kind]} · ${clock(t)}`), text);
+    const note = h("p", { class: "live-note", "data-type": kind, "data-t": t }, h("b", { class: "head" }, `${NOTE_HEAD[kind]}, ${clock(t)}.`), " ", mathText(text));
     this.live.prepend(note);
     while (this.live.children.length > 3) this.live.lastElementChild!.remove();
   }

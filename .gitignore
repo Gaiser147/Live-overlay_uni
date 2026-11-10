@@ -18,3 +18,4 @@ android/local.properties
 .impeccable/questions/
 .impeccable/review/
 .impeccable/hook.cache.json
+app/public/decks/local/

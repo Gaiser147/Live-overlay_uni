@@ -102,6 +102,11 @@ export class Controller {
       if (e.key === "ArrowLeft") this.manual(this.shown - 1);
     });
 
+    // Android gibt den Wake-Lock frei, wenn die App kurz im Hintergrund war: zurückholen.
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && this.listening) void this.keepAwake();
+    });
+
     if (settings.proxyUrl) {
       this.proxy = new ProxySession(settings.proxyUrl, settings.proxyKey, sessionName(d.deck.course, d.deck.date), d.deck);
       this.proxy.onStatus = (online) => this.register.setOnline(online);
@@ -121,8 +126,8 @@ export class Controller {
     return this.stt?.now?.() ?? Date.now();
   }
 
-  private markExam(n: number): void {
-    this.margin.markExam(n, this.now());
+  private markExam(n: number, text: string): void {
+    this.margin.markExam(n, this.now(), text);
     this.register.markExam(n);
     if (n === this.shown && this.margin.mode === "card") this.margin.showCard(this.slide(n)!);
   }
@@ -191,6 +196,7 @@ export class Controller {
   private toggleMore(): void {
     const s = this.slide(this.shown);
     if (!s) return;
+    this.slideView.clearCircle();
     if (this.margin.mode === "more") {
       this.margin.showCard(s);
       this.askBtn.setAttribute("aria-pressed", "false");
@@ -229,6 +235,7 @@ export class Controller {
   private toggleRecap(): void {
     const s = this.slide(this.shown);
     if (!s) return;
+    this.slideView.clearCircle();
     if (this.margin.mode === "recap") {
       this.margin.showCard(s);
       this.lostBtn.setAttribute("aria-pressed", "false");
@@ -248,6 +255,7 @@ export class Controller {
   private circle(text: string): void {
     const s = this.slide(this.shown);
     if (!s) return;
+    (document.activeElement as HTMLElement | null)?.blur();
     this.askBtn.setAttribute("aria-pressed", "false");
     this.lostBtn.setAttribute("aria-pressed", "false");
     this.proxy?.log({ ev: "mark", kind: "circle", n: s.n }, this.now());
@@ -335,9 +343,6 @@ export class Controller {
   private async keepAwake(): Promise<void> {
     try {
       this.wakeLock = await navigator.wakeLock?.request("screen");
-      document.addEventListener("visibilitychange", async () => {
-        if (document.visibilityState === "visible" && this.listening) this.wakeLock = await navigator.wakeLock?.request("screen");
-      });
     } catch {
       /* Wake-Lock nicht verfügbar: Bildschirm-Timeout in den Android-Einstellungen hochsetzen */
     }
@@ -369,8 +374,9 @@ export class Controller {
     const shown = result.type !== "none" && result.confidence >= 0.6 && Boolean(result.text);
     this.proxy?.log({ ev: "note", type: result.type, text: result.text, n, shown, latencyMs }, this.now());
     if (!shown) return;
-    if (result.type === "exam") this.markExam(n);
-    this.margin.addNote(result.type as Exclude<typeof result.type, "none">, result.text, this.now());
+    // Ein Klausurhinweis steht als Marginalie in der Karte (ein Signal), nicht zusätzlich als Notiz.
+    if (result.type === "exam") this.markExam(n, result.text);
+    else this.margin.addNote(result.type as Exclude<typeof result.type, "none" | "exam">, result.text, this.now());
   }
 
   private tick(): void {
@@ -404,11 +410,8 @@ export class Controller {
     const f = u.flags;
     if (f.exam) {
       const n = this.tracker.current;
-      if (f.exam.negative) this.margin.addNote("exam", "Der Prof sagt: Das wird in der Klausur nicht gefragt.", now);
-      else {
-        this.markExam(n);
-        this.margin.addNote("exam", EXAM_TEXT[f.exam.phrase] ?? "Der Prof spricht über die Klausur. Merk dir diese Stelle.", now);
-      }
+      if (f.exam.negative) this.margin.addNote("examOff", "Wird laut Prof in der Klausur nicht gefragt.", now);
+      else this.markExam(n, EXAM_TEXT[f.exam.phrase] ?? "Der Prof spricht über die Klausur. Merk dir diese Stelle.");
       this.proxy?.log({ ev: "exam", n, phrase: f.exam.phrase }, now);
     }
     if (f.link) this.margin.addNote("link", `Kennst du schon aus: ${f.link.courses.join(", ")}.`, now);

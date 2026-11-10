@@ -24,7 +24,7 @@ npm run dev                       # → http://localhost:5173/?demo
 
 ## Die Oberfläche
 
-Die Gestaltung folgt der Richtung „Lehrbuch-Satz“ (siehe `DESIGN.md` und `.impeccable/surfaces/app-index-html.md`).
+Die Gestaltung folgt der Richtung „Lehrbuch-Satz“ (siehe `app/DESIGN.md` und `app/.impeccable/surfaces/index-html.md`).
 
 - **Daumenregister** oben: ein Reiter je Abschnitt, so breit wie seine Folienzahl, darin ein Strich pro Folie. Die aktuelle Folie ist gelb, Folien mit Klausurhinweis bleiben rot.
 - **Folie** links als Nachtfolie: invertiert, Navigationsleiste und Fußzeile abgeschnitten, helle Flächen gedämpft. Markierungen sehen aus wie Textmarker.

@@ -55,7 +55,7 @@ export function openSettings(current: Settings, decks: DeckChoice[], onSave: (s:
     h(
       "p",
       { class: "hint" },
-      "Der Proxy liefert Live-Notizen, frische Erklärungen und das Token für die Transkription. Der Schlüssel bleibt auf diesem Tablet. Ton speichern ist nur nötig, wenn TwinMind nicht mitläuft (Weg 2).",
+      "Der Proxy liefert Live-Notizen, frische Erklärungen und den Zugang zur Transkription. Der Schlüssel bleibt auf diesem Tablet. Ton speichern brauchst du nur, wenn TwinMind nicht mitläuft – die Datei lädst du danach dort hoch.",
     ),
     h(
       "div",

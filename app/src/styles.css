@@ -115,7 +115,7 @@ button {
 
 .app {
   display: grid;
-  grid-template-rows: var(--register-h) 1fr var(--bar-h);
+  grid-template-rows: var(--register-h) 1fr auto;
   height: 100dvh;
 }
 
@@ -164,6 +164,12 @@ button {
   line-height: 1;
   color: var(--ink-3);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-label > span {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -314,7 +320,8 @@ body[data-state="tafel"] .state-dot {
 }
 
 .icon-btn[aria-pressed="true"] {
-  color: var(--here);
+  color: var(--ink);
+  background: var(--rule);
 }
 
 .follow-btn {
@@ -351,6 +358,8 @@ body[data-state="manuell"] .follow-btn {
   position: relative;
   overflow: hidden;
   margin: 0;
+  /* Eigener Grund: Mischmodus der Nachtfolie bleibt auch beim Abdunkeln (Tafelmodus) unsichtbar. */
+  background: var(--ground);
   width: 100%;
   max-height: 100%;
   aspect-ratio: var(--aspect, 4 / 3);
@@ -497,9 +506,6 @@ body.fresh .margin {
   transition: color 250ms var(--ease);
 }
 
-body.fresh .glance .head {
-  color: var(--here);
-}
 
 .topic {
   font-style: italic;
@@ -542,19 +548,15 @@ body.fresh .glance .head {
   color: var(--ink-2);
 }
 
+/* Klausurhinweis des Profs: Marginalie in Korrekturrot, gesetzt wie die übrigen Absätze. */
 .exam-flag {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-family: var(--font-ui);
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--exam);
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--ink);
 }
 
-.exam-flag .icon {
-  width: 17px;
-  height: 17px;
+.exam-flag .head {
+  color: var(--exam);
 }
 
 /* Ausführlich („Genauer"), Rückblick, S-Pen-Stelle */
@@ -619,14 +621,11 @@ body.fresh .glance .head {
 
 .recap-points li::before {
   counter-increment: p;
-  content: counter(p);
+  content: counter(p) ".";
   position: absolute;
   left: 0;
-  top: 2px;
-  font-family: var(--font-ui);
-  font-size: 15px;
   font-weight: 600;
-  color: var(--here);
+  color: var(--ink-3);
 }
 
 .recap-here {
@@ -692,6 +691,7 @@ body.fresh .glance .head {
   display: none;
 }
 
+/* Live-Notiz als Marginalie mit fettem Einlauf: „Prof, 10:06. …“ */
 .live-note {
   margin: 0;
   font-family: var(--font-text);
@@ -704,26 +704,26 @@ body.fresh .glance .head {
   margin-top: 12px;
 }
 
-.live-note .who {
-  display: block;
-  margin-bottom: 3px;
-  font-family: var(--font-ui);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-3);
-}
-
-.live-note[data-type="exam"] .who {
-  color: var(--exam);
-}
-
-.live-note[data-type="exam"] {
+.live-note .head {
   color: var(--ink);
 }
 
-.live-note[data-type="board"] .who,
-.live-note[data-type="link"] .who {
+.live-note[data-type="exam"] .head {
+  color: var(--exam);
+}
+
+.live-note[data-type="examOff"],
+.live-note[data-type="board"],
+.live-note[data-type="link"],
+.live-note[data-type="offtopic"] {
   color: var(--ink-3);
+}
+
+.live-note[data-type="examOff"] .head,
+.live-note[data-type="board"] .head,
+.live-note[data-type="link"] .head,
+.live-note[data-type="offtopic"] .head {
+  color: var(--ink-2);
 }
 
 /* ---------------------------------------------------------- Fußleiste */
@@ -731,6 +731,7 @@ body.fresh .glance .head {
 .bar {
   display: grid;
   grid-template-columns: 1fr var(--margin-w);
+  min-height: var(--bar-h);
   border-top: 1px solid var(--rule);
 }
 
@@ -791,12 +792,8 @@ body.fresh .glance .head {
 }
 
 .btn[aria-pressed="true"] {
-  border-color: var(--here);
-  background: var(--ground-raised);
-}
-
-.btn[aria-pressed="true"] .icon {
-  color: var(--here);
+  border-color: var(--ink-2);
+  background: var(--rule);
 }
 
 .btn:disabled {
@@ -809,8 +806,9 @@ body.fresh .glance .head {
 /* Tafelmodus: Fast nichts zeigen. Nur das Register bleibt, damit man weiß, wo man ist. */
 body[data-state="tafel"] .slide-pane,
 body[data-state="tafel"] .live,
-body[data-state="tafel"] .next {
-  opacity: 0.18;
+body[data-state="tafel"] .next,
+body[data-state="tafel"] .actions {
+  opacity: 0.22;
 }
 
 body[data-state="tafel"] .card {
@@ -947,14 +945,14 @@ body[data-state="tafel"] .board-msg {
   background: var(--ground-raised);
 }
 
+/* Hauptaktion: kräftigere Kontur statt Füllung – keine hellen Flächen im dunklen Saal. */
 .btn.primary {
-  border-color: var(--here);
-  background: var(--here);
-  color: var(--here-ink);
+  border-color: var(--ink-2);
+  background: var(--ground-raised);
 }
 
 .btn.primary:hover {
-  background: oklch(0.88 0.14 88);
+  background: var(--rule);
 }
 
 .toast {
@@ -1074,11 +1072,14 @@ body[data-state="tafel"] .board-msg {
     grid-template-columns: 1fr;
   }
 
+  /* Bei halber Breite steht „Gleich: …“ als schmale Zeile über den Knöpfen. */
   .next {
-    display: none;
+    padding: 8px 16px 0;
+    font-size: 15px;
   }
 
   .actions {
+    padding: 8px 16px 10px;
     border-left: 0;
   }
 

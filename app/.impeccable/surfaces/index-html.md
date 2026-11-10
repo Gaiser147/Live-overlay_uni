@@ -1,7 +1,7 @@
 ---
 version: 1
-slug: "app-index-html"
-primary_target: "app/index.html"
+slug: "index-html"
+primary_target: "index.html"
 related_targets: []
 ---
 
@@ -23,7 +23,10 @@ FORM: Lehrbuch-Satz, Platz 6 meiner Liste. seed:034521e169bc815a. Signatur-Beweg
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
-## Offene Punkte
+## Begründete Anpassungen (Finish-Review, Runde 1)
 
-- Splitscreen bei halber Breite: Folie oben, Karte darunter, Knöpfe unten.
-- Tafelmodus: alles bis auf das Register und „Prof zeichnet — schau nach vorn" auf ca. 25 % abgedunkelt.
+- Register 56 px statt 40 px: Folgen, Mikrofon und Einstellungen sitzen im Register und brauchen Touch-Ziele ≥ 48 px (PRODUCT.md, Barrierefreiheit). Die Reiter-Geometrie bleibt unverändert.
+- Splitscreen bei halber Breite: Folie oben, Karte darunter. „Gleich: …" steht als schmale Zeile über den Knöpfen.
+- Gelb nur für „hier bist du": aktueller Strich, aktiver Abschnitt, Punkt „folgt", Randstrich einer neuen Karte. Dazu die kurze Unterstreichung eines gerade gefallenen Begriffs auf der Folie, die ebenfalls „hier ist der Prof" bedeutet. Gedrückte Knöpfe und Hauptaktionen bekommen eine Kontur, keine Füllung.
+- Live-Notizen und Klausurhinweis sind Marginalien mit fettem Einlauf („**Prof, 10:06.** …"), keine Etiketten über dem Text. Ein Klausurhinweis ist ein Signal: roter Strich im Register und rote Marginalie in der Karte.
+- Tafelmodus: alles bis auf das Register und „Prof zeichnet – schau nach vorn." auf ca. 22 % abgedunkelt, die Knöpfe eingeschlossen. Sie bleiben bedienbar.

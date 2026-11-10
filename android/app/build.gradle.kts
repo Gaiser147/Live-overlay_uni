@@ -30,7 +30,4 @@ android {
     }
 }
 
-dependencies {
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.webkit:webkit:1.12.1")
-}
+// Keine Bibliotheken nötig: WebView, AudioRecord und AccessibilityService kommen aus der Plattform.
