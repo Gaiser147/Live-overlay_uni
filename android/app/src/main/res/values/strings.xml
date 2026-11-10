@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Live-Overlay</string>
+    <string name="spike_name">Overlay Mikro-Test</string>
+    <string name="service_name">Live-Overlay Ton</string>
+    <string name="service_description">Nimmt während der Vorlesung den Ton für das Live-Overlay auf, parallel zu TwinMind. Liest keine Bildschirminhalte.</string>
+    <string name="enter_url">Adresse der Overlay-App (z. B. https://live-overlay.….workers.dev/)</string>
+</resources>

@@ -1,0 +1,35 @@
+# Cloud-Proxy für das Live-Overlay. Einrichtung: siehe proxy/README.md
+name = "live-overlay"
+main = "src/index.ts"
+compatibility_date = "2026-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Die App (app/dist) gleich mit ausliefern. Vorher: npm run build
+[assets]
+directory = "../app/dist"
+binding = "ASSETS"
+run_worker_first = ["/token", "/ws", "/log/*", "/decks/*", "/profile", "/health"]
+
+[[durable_objects.bindings]]
+name = "SESSIONS"
+class_name = "LectureSession"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["LectureSession"]
+
+# wrangler kv namespace create DECKS  → id hier eintragen
+[[kv_namespaces]]
+binding = "DECKS"
+id = "00000000000000000000000000000000"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
+
+[vars]
+ALLOWED_ORIGIN = "*"
+
+# Geheimnisse (wrangler secret put …):
+#   ANTHROPIC_API_KEY, ASSEMBLYAI_API_KEY, DEEPGRAM_API_KEY, APP_KEY, PI_KEY

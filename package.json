@@ -1,0 +1,28 @@
+{
+  "name": "live-overlay",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "app",
+    "proxy"
+  ],
+  "scripts": {
+    "dev": "npm --workspace app run dev",
+    "build": "npm --workspace app run build",
+    "typecheck": "tsc -p tsconfig.json --noEmit && npm --workspace proxy run typecheck",
+    "test": "vitest run",
+    "replay": "node test/replay.ts",
+    "replay:demo": "node test/replay.ts --fixture test/fixtures/demo",
+    "replay:real": "node test/replay.ts --fixture test/fixtures/2026-11-10",
+    "demo:deck": "prep/.venv/bin/python prep/build_demo.py",
+    "test:py": "prep/.venv/bin/python -m pytest -q prep/tests"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

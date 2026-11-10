@@ -1,0 +1,35 @@
+10:00:00 Guten Morgen zusammen. Heute geht es um lineare Abbildungen, das ist eine Demo-Vorlesung, also alles hier ist ausgedacht.
+
+10:00:30 Warum interessiert uns das überhaupt? Viele Probleme kann man durch lineare Probleme ersetzen, und lineare Gleichungssysteme lösen wir sehr schnell. Drehen, Spiegeln, Strecken, das sind alles lineare Abbildungen.
+
+10:01:05 So, jetzt die Definition. Eine Abbildung f von V nach W heißt linear, wenn f von x plus y gleich f von x plus f von y ist, und wenn f von Lambda x gleich Lambda mal f von x ist. Also Summen und Vielfache bleiben erhalten.
+
+10:01:40 Das müssen Sie in der Klausur zeigen können, also ich gebe Ihnen eine Funktion und Sie zeigen, dass sie linear ist. Insbesondere gilt immer f von null gleich null.
+
+10:02:10 Erstes Beispiel, die Drehung um neunzig Grad gegen den Uhrzeigersinn. Ich nehme einen Pfeil a und drehe ihn, dann einen Pfeil b und drehe ihn auch.
+
+10:02:40 Ich zeichne das mal hier an die Tafel. Das ist a, das hier ist b, und jetzt pack ich b hier dran, das Ding hier ist a plus b. Und hier die gedrehte Linie, f von a, da f von b, das hier dran.
+
+10:03:10 Und das hier ist f von a plus f von b, genau dieselbe Linie wie f von a plus b. Gucken Sie hier, gleiche Länge, gleiche Richtung.
+
+10:03:40 Gut, nächstes Beispiel, die Streckung. f von x gleich zwei x streckt jeden Pfeil auf doppelte Länge. Zwei mal x plus y ist zwei x plus zwei y, also linear. Den allgemeinen Beweis für beliebige Faktoren fragen wir in der Klausur nicht.
+
+10:04:10 Jetzt kommt ein ganz wichtiger Begriff, der Kern. Der Kern von f ist die Menge aller Vektoren, die auf null abgebildet werden. Ker f gleich alle v mit f von v gleich null. Der Kern ist immer ein Unterraum.
+
+10:04:40 Das hatten Sie wahrscheinlich schon in Mathe eins und in Mamo, da allerdings für allgemeine Funktionen. Wer hatte das schon? Ja, viele.
+
+10:05:05 Øhm, muddervogn eller, rum.
+
+10:05:20 Beispiel Projektion auf die x-Achse. f von x y ist x null, wir fällen das Lot auf die x-Achse. Stellen Sie sich den Schatten vor, wenn das Licht genau von oben kommt, dann ist die Projektion der Schatten des Pfeils.
+
+10:05:55 Der Pfeil hier wird auf seinen Schatten auf der Achse abgebildet. Die Projektion vergisst einfach die y-Koordinate.
+
+10:06:20 Aufgabe für Sie: Welche Vektoren liegen im Kern der Projektion? Überlegen Sie kurz und begründen Sie Ihre Antwort, wir besprechen das in der Übung.
+
+10:06:50 Jetzt zur Abbildungsmatrix. Jede lineare Abbildung von R m nach R n hat eine Matrix A, sodass f von x gleich A mal x ist. Die Spalten von A sind die Bilder der Einheitsvektoren e eins bis e m.
+
+10:07:25 Matrix mal Vektor rechnen Sie so: Sie nehmen den ersten Eintrag von x mal die erste Spalte, den zweiten Eintrag mal die zweite Spalte und addieren. Im Beispiel zwei mal eins null plus eins mal zwei minus fünf, das gibt vier minus fünf.
+
+10:08:00 Achtung beim Produkt von Matrizen: A mal B ist im Allgemeinen nicht B mal A, das Produkt ist nicht kommutativ. Klammern dürfen Sie versetzen, aber die Reihenfolge der Faktoren nicht tauschen.
+
+10:08:35 Zusammenfassung: Linear heißt, Summen und Vielfache bleiben erhalten. Der Kern ist alles, was auf null landet. Und jede lineare Abbildung ist Matrix mal Vektor. Bis nächste Woche.

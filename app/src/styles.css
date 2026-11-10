@@ -1,0 +1,1116 @@
+/* Live-Overlay – Lehrbuch-Satz auf Tintenblau.
+   Tokens: ein Grund, Papierweiß für Text, Springer-Gelb nur für „hier bist du",
+   Korrekturrot für Klausur, Schiefer für unsicher. Zonen trennen Haarlinien, keine Kästen. */
+
+@import "@fontsource/atkinson-hyperlegible-next/latin-400.css";
+@import "@fontsource/atkinson-hyperlegible-next/latin-600.css";
+
+@font-face {
+  font-family: "STIX Two Text";
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+  src: url("./fonts/stix-two-text-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "STIX Two Text";
+  font-weight: 600;
+  font-style: normal;
+  font-display: block;
+  src: url("./fonts/stix-two-text-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "STIX Two Text";
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+  src: url("./fonts/stix-two-text-400-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "STIX Symbols";
+  font-weight: 400 700;
+  font-display: block;
+  src: url("./fonts/stix-two-math-symbols.woff2") format("woff2");
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Grund und Linien */
+  --ground: oklch(0.165 0.028 262);
+  --ground-raised: oklch(0.2 0.032 262);
+  --rule: oklch(0.31 0.03 262);
+  --rule-strong: oklch(0.42 0.03 262);
+
+  /* Text */
+  --ink: oklch(0.93 0.02 85);
+  --ink-2: oklch(0.8 0.02 85);
+  --ink-3: oklch(0.68 0.025 262);
+
+  /* Bedeutung */
+  --here: oklch(0.84 0.155 88);
+  --here-ink: oklch(0.2 0.04 88);
+  --here-dim: oklch(0.6 0.1 88);
+  --exam: oklch(0.7 0.165 32);
+  --unsure: oklch(0.62 0.02 262);
+  --marker: oklch(0.86 0.17 95);
+
+  --font-ui: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-text: "STIX Two Text", "STIX Symbols", "Noto Serif", serif;
+
+  --register-h: 56px;
+  --bar-h: 76px;
+  --margin-w: clamp(360px, 38vw, 520px);
+  --pad: 24px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+  overscroll-behavior: none;
+}
+
+body {
+  overflow: hidden;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--here);
+  color: var(--here-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--here);
+  outline-offset: 2px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.9;
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ Gerüst */
+
+.app {
+  display: grid;
+  grid-template-rows: var(--register-h) 1fr var(--bar-h);
+  height: 100dvh;
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: 1fr var(--margin-w);
+  min-height: 0;
+}
+
+/* ------------------------------------------------------------ Daumenregister */
+
+.register {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--rule);
+  background: var(--ground-raised);
+}
+
+.tabs {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 0 12px;
+  border: 0;
+  border-right: 1px solid var(--rule);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tab-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-label .icon {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.4;
+}
+
+.tab[data-status="done"] .tab-label {
+  color: var(--ink-2);
+}
+
+.tab[data-status="current"] {
+  background: var(--ground);
+}
+
+/* Der aktive Reiter ragt nach unten in die Seite – wie ein Daumenregister. */
+.tab[data-status="current"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--ground);
+}
+
+.tab[data-status="current"] .tab-label {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.ticks {
+  display: flex;
+  gap: 2px;
+  height: 6px;
+}
+
+.tick {
+  flex: 1;
+  min-width: 2px;
+  border-radius: 1px;
+  background: var(--rule);
+  transition: background-color 200ms var(--ease);
+}
+
+.tick[data-s="done"] {
+  background: var(--rule-strong);
+}
+
+.tick[data-s="current"] {
+  background: var(--here);
+}
+
+/* Folie mit Klausurhinweis: roter Strich, auch nachdem sie vorbei ist. */
+.tick[data-exam="1"] {
+  background: var(--exam);
+}
+
+.tick[data-exam="1"][data-s="current"] {
+  background: linear-gradient(to right, var(--here) 50%, var(--exam) 50%);
+}
+
+.where {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 8px 0 16px;
+  white-space: nowrap;
+}
+
+.pos {
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.pos b {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 17px;
+}
+
+.state {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+.state-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--here-dim);
+}
+
+body[data-state="folgt"] .state-dot {
+  background: var(--here);
+}
+body[data-state="unsicher"] .state-dot,
+body[data-state="manuell"] .state-dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--unsure);
+}
+body[data-state="tafel"] .state-dot {
+  background: var(--ink-3);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink-3);
+  font-size: 13px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: var(--rule);
+}
+
+.icon-btn:active {
+  background: var(--rule-strong);
+}
+
+.icon-btn[aria-pressed="true"] {
+  color: var(--here);
+}
+
+.follow-btn {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+body[data-state="manuell"] .follow-btn {
+  display: flex;
+}
+
+/* ---------------------------------------------------------------- Folie */
+
+.slide-pane {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  padding: 16px var(--pad);
+  touch-action: pan-y;
+  transition: opacity 250ms var(--ease);
+}
+
+.slide {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  width: 100%;
+  max-height: 100%;
+  aspect-ratio: var(--aspect, 4 / 3);
+  max-width: calc((100dvh - var(--register-h) - var(--bar-h) - 32px) * var(--aspect-n, 1.3333));
+}
+
+.slide img {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+  /* Nachtfolie (SVG-Filter #night): invertiert, Farbton zurückgedreht, helle Flächen gedämpft,
+     Schwarz verschwindet im Grund. Weiße Schrift bleibt hell. */
+  filter: url(#night);
+  mix-blend-mode: screen;
+}
+
+body[data-slide-look="original"] .slide img {
+  filter: brightness(0.62);
+  mix-blend-mode: normal;
+}
+
+.slide-text {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  padding: 6% 7%;
+  border: 1px solid var(--rule);
+  font-family: var(--font-text);
+  font-size: 19px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  white-space: pre-line;
+}
+
+.slide-text h2 {
+  margin: 0 0 0.6em;
+  font-size: 1.35em;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.overlay .hl {
+  fill: var(--marker);
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+}
+
+.overlay .term {
+  fill: var(--here);
+  opacity: 0;
+  transition: opacity 200ms var(--ease);
+}
+
+.overlay .term.on {
+  opacity: 1;
+}
+
+.overlay .circled {
+  fill: none;
+  stroke: var(--here);
+  stroke-width: 0.004;
+  stroke-dasharray: 0.012 0.008;
+}
+
+.ink {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.ink path {
+  fill: none;
+  stroke: var(--here);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------------------------------------------------------- Marginalspalte */
+
+.margin {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-left: 1px solid var(--rule);
+  transition: border-color 250ms var(--ease), opacity 250ms var(--ease);
+}
+
+/* Neue Karte: Die Haarlinie zur Folie wird gelb, bis du hinschaust. */
+body.fresh .margin {
+  border-left-color: var(--here);
+}
+
+.card {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 28px 28px 20px;
+  font-family: var(--font-text);
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+
+:where(.card p, .card ol, .card ul) {
+  margin: 0;
+}
+
+/* Satzrhythmus: Absätze der Umgebung mit festem Abstand, mehr Luft nach dem Kernsatz. */
+.card > * + * {
+  margin-top: 20px;
+}
+
+.card > .glance + * {
+  margin-top: 24px;
+}
+
+.head {
+  font-weight: 600;
+  font-style: normal;
+}
+
+.glance {
+  font-size: 31px;
+  line-height: 1.28;
+  text-wrap: pretty;
+  color: var(--ink);
+}
+
+.glance .head {
+  color: var(--ink);
+  transition: color 250ms var(--ease);
+}
+
+body.fresh .glance .head {
+  color: var(--here);
+}
+
+.topic {
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.sub {
+  font-size: 21px;
+  line-height: 1.4;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.sub .head {
+  color: var(--ink);
+}
+
+.sub .tag {
+  font-style: italic;
+}
+
+.end::after {
+  content: " ◇";
+  color: var(--ink-3);
+  font-size: 0.8em;
+}
+
+.exam-off {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  color: var(--ink-3);
+}
+
+.card[data-exam="off"] .glance,
+.card[data-exam="off"] .sub {
+  color: var(--ink-3);
+}
+.card[data-exam="off"] .glance .head,
+.card[data-exam="off"] .sub .head {
+  color: var(--ink-2);
+}
+
+.exam-flag {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--exam);
+}
+
+.exam-flag .icon {
+  width: 17px;
+  height: 17px;
+}
+
+/* Ausführlich („Genauer"), Rückblick, S-Pen-Stelle */
+.more {
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.fresh-answer {
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-size: 21px;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.fresh-answer[data-loading]::before {
+  content: "";
+  display: block;
+  height: 12px;
+  width: 70%;
+  margin: 6px 0 12px;
+  border-radius: 3px;
+  background: var(--rule);
+}
+
+.fresh-answer[data-loading]::after {
+  content: "";
+  display: block;
+  height: 12px;
+  width: 45%;
+  border-radius: 3px;
+  background: var(--rule);
+}
+
+.recap-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: p;
+}
+
+.recap-points li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 21px;
+  line-height: 1.4;
+}
+
+.recap-points li + li {
+  margin-top: 14px;
+}
+
+.recap-points .ref {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+.recap-points li::before {
+  counter-increment: p;
+  content: counter(p);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--here);
+}
+
+.recap-here {
+  font-size: 26px;
+  line-height: 1.3;
+}
+
+.recap-sections {
+  display: grid;
+  gap: 8px;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--rule);
+  list-style: none;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  color: var(--ink-3);
+}
+
+.recap-sections li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recap-sections li[data-s="done"] {
+  color: var(--ink-2);
+}
+
+.recap-sections li[data-s="current"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.recap-sections .mark {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+}
+
+.recap-sections .ring {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+
+.recap-sections li[data-s="current"] .ring {
+  background: var(--here);
+  box-shadow: none;
+}
+
+/* Live-Notiz */
+.live {
+  flex: none;
+  max-height: 40%;
+  overflow-y: auto;
+  border-top: 1px solid var(--rule);
+  padding: 16px 28px 18px;
+}
+
+.live:empty {
+  display: none;
+}
+
+.live-note {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: 19px;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.live-note + .live-note {
+  margin-top: 12px;
+}
+
+.live-note .who {
+  display: block;
+  margin-bottom: 3px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.live-note[data-type="exam"] .who {
+  color: var(--exam);
+}
+
+.live-note[data-type="exam"] {
+  color: var(--ink);
+}
+
+.live-note[data-type="board"] .who,
+.live-note[data-type="link"] .who {
+  color: var(--ink-3);
+}
+
+/* ---------------------------------------------------------- Fußleiste */
+
+.bar {
+  display: grid;
+  grid-template-columns: 1fr var(--margin-w);
+  border-top: 1px solid var(--rule);
+}
+
+.next {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0 var(--pad);
+  font-size: 17px;
+  color: var(--ink-3);
+  min-width: 0;
+}
+
+.next span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.next b {
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 0 16px;
+  border-left: 1px solid var(--rule);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 56px;
+  padding: 0 14px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 10px;
+  background: transparent;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 150ms var(--ease), border-color 150ms var(--ease);
+}
+
+.btn:hover {
+  background: var(--ground-raised);
+}
+
+.btn:active {
+  background: var(--rule);
+}
+
+.btn[aria-pressed="true"] {
+  border-color: var(--here);
+  background: var(--ground-raised);
+}
+
+.btn[aria-pressed="true"] .icon {
+  color: var(--here);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---------------------------------------------------------- Zustände */
+
+/* Tafelmodus: Fast nichts zeigen. Nur das Register bleibt, damit man weiß, wo man ist. */
+body[data-state="tafel"] .slide-pane,
+body[data-state="tafel"] .live,
+body[data-state="tafel"] .next {
+  opacity: 0.18;
+}
+
+body[data-state="tafel"] .card {
+  opacity: 0;
+}
+
+body[data-state="tafel"] .margin {
+  border-left-color: var(--rule);
+}
+
+.board-msg {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-content: center;
+  gap: 10px;
+  padding: 28px;
+  font-family: var(--font-text);
+  pointer-events: none;
+}
+
+.board-msg p {
+  margin: 0;
+}
+
+.board-msg .big {
+  font-size: 30px;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.board-msg .small {
+  font-size: 19px;
+  color: var(--ink-3);
+}
+
+body[data-state="tafel"] .board-msg {
+  display: grid;
+}
+
+/* ---------------------------------------------------------- Einstellungen */
+
+.settings {
+  width: min(640px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: 14px;
+  background: var(--ground-raised);
+  color: var(--ink);
+  font-family: var(--font-ui);
+}
+
+.settings::backdrop {
+  background: oklch(0.1 0.02 262 / 0.7);
+}
+
+.settings form {
+  display: grid;
+  gap: 18px;
+  padding: 24px 24px 0;
+}
+
+.settings h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.settings .lead {
+  margin: -8px 0 0;
+  color: var(--ink-3);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.field label,
+.field legend {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.settings > form > .hint,
+.field .hint {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.4;
+}
+
+.field input,
+.field select {
+  height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  background: var(--ground);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  user-select: text;
+}
+
+.field input::placeholder {
+  color: var(--ink-3);
+}
+
+.field input:focus-visible,
+.field select:focus-visible {
+  outline: 2px solid var(--here);
+  outline-offset: 1px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.settings-actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 0 -24px;
+  padding: 14px 24px;
+  border-top: 1px solid var(--rule);
+  background: var(--ground-raised);
+}
+
+.btn.primary {
+  border-color: var(--here);
+  background: var(--here);
+  color: var(--here-ink);
+}
+
+.btn.primary:hover {
+  background: oklch(0.88 0.14 88);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--bar-h) + 16px);
+  translate: -50% 0;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 12px 16px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 10px;
+  background: var(--ground-raised);
+  font-size: 15px;
+  color: var(--ink-2);
+  opacity: 0;
+  transition: opacity 200ms var(--ease);
+  pointer-events: none;
+}
+
+.toast.on {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------- Leerzustand */
+
+.empty {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 18px;
+  width: min(640px, 100% - 48px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  font-family: var(--font-text);
+}
+
+.empty h2 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.empty p {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 21px;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.empty .detail {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink-3);
+  overflow-wrap: anywhere;
+}
+
+.empty .btn {
+  margin-top: 8px;
+  font-family: var(--font-ui);
+}
+
+/* ---------------------------------------------------------- Splitscreen */
+
+@media (max-width: 900px) {
+  :root {
+    --register-h: 56px;
+    --bar-h: 72px;
+    --pad: 16px;
+  }
+
+  .stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .slide-pane {
+    padding: 10px var(--pad) 8px;
+  }
+
+  .slide {
+    max-height: 46dvh;
+    max-width: calc(46dvh * var(--aspect-n, 1.3333));
+  }
+
+  .margin {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  body.fresh .margin {
+    border-top-color: var(--here);
+  }
+
+  .card {
+    padding: 18px 20px 14px;
+  }
+
+  .glance {
+    font-size: 26px;
+  }
+
+  .sub {
+    font-size: 19px;
+  }
+
+  .card > * + * {
+    margin-top: 14px;
+  }
+
+  .live {
+    padding: 12px 20px;
+  }
+
+  .bar {
+    grid-template-columns: 1fr;
+  }
+
+  .next {
+    display: none;
+  }
+
+  .actions {
+    border-left: 0;
+  }
+
+  /* Im Register nur der aktuelle Abschnitt mit Namen, die anderen als schmale Reiter. */
+  .tab:not([data-status="current"]) .tab-label {
+    display: none;
+  }
+
+  .tab:not([data-status="current"]) {
+    padding: 0 6px;
+  }
+
+  .tab[data-status="current"] {
+    flex: 0 0 auto !important;
+    min-width: max-content;
+  }
+
+  .state-label,
+  .status-text {
+    display: none;
+  }
+
+  .where {
+    gap: 8px;
+    padding-left: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+  }
+}

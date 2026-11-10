@@ -1,0 +1,933 @@
+{
+ "version": 1,
+ "course": "demo",
+ "date": "2026-11-10",
+ "title": "Lineare Abbildungen (Demo)",
+ "sections": [
+  "Einstieg",
+  "Lineare Abbildungen",
+  "Matrizen"
+ ],
+ "slides": [
+  {
+   "n": 1,
+   "section": "Einstieg",
+   "title": "Lineare Abbildungen (Demo)",
+   "kind": "title",
+   "glance": "Heute: Abbildungen, die Plus und Mal respektieren.",
+   "example": null,
+   "rule": null,
+   "more": "Demo-Vorlesung mit erfundenen Folien. Sie zeigt, wie das Overlay eine Vorlesung begleitet.",
+   "next_hint": "Gleich: Warum linear?",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [],
+   "keywords": [
+    "lineare Abbildungen",
+    "Demo"
+   ],
+   "links": [],
+   "image": "slides/001.png",
+   "text": "Lineare Abbildungen (Demo)\nSynthetische Beispielfolien für das Live-Overlay\nKeine echte Vorlesung",
+   "blocks": [
+    {
+     "bbox": [
+      0.1439,
+      0.3297,
+      0.8555,
+      0.3978
+     ],
+     "text": "Lineare Abbildungen (Demo)"
+    },
+    {
+     "bbox": [
+      0.2374,
+      0.4945,
+      0.7619,
+      0.5286
+     ],
+     "text": "Synthetische Beispielfolien für das Live-Overlay"
+    },
+    {
+     "bbox": [
+      0.3762,
+      0.5262,
+      0.6235,
+      0.5603
+     ],
+     "text": "Keine echte Vorlesung"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "section": "Einstieg",
+   "title": "Warum linear?",
+   "kind": "motivation",
+   "glance": "Schwer → durch linear ersetzen → schnell lösbar.",
+   "example": null,
+   "rule": null,
+   "more": "Viele Probleme ersetzt man durch lineare. Lineare Gleichungssysteme löst man schnell und weiß sofort, ob es eine Lösung gibt.",
+   "next_hint": "Gleich: Definition",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [],
+   "keywords": [
+    "linear",
+    "Gleichungssysteme",
+    "Drehen",
+    "Spiegeln",
+    "Strecken"
+   ],
+   "links": [],
+   "image": "slides/002.png",
+   "text": "Warum linear?\n• Viele Probleme lassen sich durch lineare ersetzen.\n• Lineare Gleichungssysteme löst man schnell und sicher.\n• Drehen, Spiegeln und Strecken sind lineare Abbildungen.",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.3085,
+      0.1422
+     ],
+     "text": "Warum linear?"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.6234,
+      0.1974
+     ],
+     "text": "• Viele Probleme lassen sich durch lineare ersetzen."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2146,
+      0.6878,
+      0.2486
+     ],
+     "text": "• Lineare Gleichungssysteme löst man schnell und sicher."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2658,
+      0.6991,
+      0.2999
+     ],
+     "text": "• Drehen, Spiegeln und Strecken sind lineare Abbildungen."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "section": "Lineare Abbildungen",
+   "title": "Lineare Abbildung",
+   "kind": "definition",
+   "glance": "Linear = erst addieren oder erst abbilden, egal.",
+   "example": {
+    "text": "f(x) = 3x: f(2 + 5) = 21 = f(2) + f(5) = 6 + 15.",
+    "invented": true
+   },
+   "rule": "Test: 0 einsetzen → muss 0 rauskommen.",
+   "more": "f ist linear, wenn Summen und Vielfache erhalten bleiben: f(x + y) = f(x) + f(y) und f(λx) = λ·f(x). Daraus folgt f(0) = 0.",
+   "next_hint": "Gleich: Drehung um 90°",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [
+    {
+     "bbox": [
+      0.0549,
+      0.3481,
+      0.5208,
+      0.3801
+     ],
+     "label": "Das ist die Definition"
+    }
+   ],
+   "keywords": [
+    "Definition",
+    "linear",
+    "lineare Abbildung",
+    "Summe",
+    "Vielfache",
+    "lambda"
+   ],
+   "links": [],
+   "image": "slides/003.png",
+   "text": "Lineare Abbildung\nDefinition 1 (lineare Abbildung)\nEine Abbildung f : V → W heißt linear, wenn für alle\nx, y ∈ V und λ ∈ R gilt:\nf(x + y) = f(x) + f(y) und f(λx) = λ f(x).\nInsbesondere gilt immer f(0) = 0.",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.378,
+      0.1422
+     ],
+     "text": "Lineare Abbildung"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.1998,
+      0.4231,
+      0.2317
+     ],
+     "text": "Definition 1 (lineare Abbildung)"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.2602,
+      0.5792,
+      0.2922
+     ],
+     "text": "Eine Abbildung f : V → W heißt linear, wenn für alle"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.3042,
+      0.2932,
+      0.3361
+     ],
+     "text": "x, y ∈ V und λ ∈ R gilt:"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.3481,
+      0.5208,
+      0.3801
+     ],
+     "text": "f(x + y) = f(x) + f(y) und f(λx) = λ f(x)."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.4234,
+      0.4167,
+      0.4574
+     ],
+     "text": "Insbesondere gilt immer f(0) = 0."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "section": "Lineare Abbildungen",
+   "title": "Beispiel: Drehung um 90°",
+   "kind": "example",
+   "glance": "Drehen und dann addieren = addieren und dann drehen.",
+   "example": {
+    "text": "(1; 0) gedreht → (0; 1). (0; 1) gedreht → (−1; 0).",
+    "invented": true
+   },
+   "rule": null,
+   "more": "f dreht jeden Pfeil um 90° gegen den Uhrzeigersinn. Die gedrehte Summe a + b ist dieselbe wie die Summe der gedrehten Pfeile. Also ist die Drehung linear.",
+   "next_hint": "Gleich: Streckung",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [
+    {
+     "bbox": [
+      0.0495,
+      0.2658,
+      0.3246,
+      0.2999
+     ],
+     "label": "Darum geht's"
+    }
+   ],
+   "keywords": [
+    "Drehung",
+    "90 Grad",
+    "Uhrzeigersinn",
+    "gedreht",
+    "Pfeil"
+   ],
+   "links": [],
+   "image": "slides/004.png",
+   "text": "Beispiel: Drehung um 90°\nf dreht jeden Pfeil um 90° gegen den Uhrzeigersinn.\nGedreht und addiert ist dasselbe wie addiert und gedreht:\nf(a) + f(b) = f(a + b).\na+b\nf(a)\nb\na",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.5128,
+      0.1422
+     ],
+     "text": "Beispiel: Drehung um 90°"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.6229,
+      0.1974
+     ],
+     "text": "f dreht jeden Pfeil um 90° gegen den Uhrzeigersinn."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2146,
+      0.6902,
+      0.2486
+     ],
+     "text": "Gedreht und addiert ist dasselbe wie addiert und gedreht:"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2658,
+      0.3246,
+      0.2999
+     ],
+     "text": "f(a) + f(b) = f(a + b)."
+    },
+    {
+     "bbox": [
+      0.4258,
+      0.6285,
+      0.7326,
+      0.6992
+     ],
+     "text": "a+b\nf(a)"
+    },
+    {
+     "bbox": [
+      0.522,
+      0.7017,
+      0.5359,
+      0.7358
+     ],
+     "text": "b"
+    },
+    {
+     "bbox": [
+      0.6181,
+      0.8116,
+      0.6316,
+      0.8457
+     ],
+     "text": "a"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "section": "Lineare Abbildungen",
+   "title": "Beispiel: Streckung",
+   "kind": "example",
+   "glance": "Strecken um Faktor 2: jede Länge verdoppelt sich.",
+   "example": {
+    "text": "(1; 3) → (2; 6). (1; 3) + (2; 0) = (3; 3) → (6; 6) = (2; 6) + (4; 0).",
+    "invented": true
+   },
+   "rule": null,
+   "more": "f(x) = 2x ist linear, weil 2(x + y) = 2x + 2y. Laut Folie ist der Beweis für allgemeine Faktoren nicht klausurrelevant.",
+   "next_hint": "Gleich: Kern",
+   "exam_relevant": false,
+   "exam_note": "Beweis laut Folie nicht klausurrelevant",
+   "highlights": [],
+   "keywords": [
+    "Streckung",
+    "Faktor",
+    "doppelt",
+    "Länge",
+    "2x"
+   ],
+   "links": [],
+   "image": "slides/005.png",
+   "text": "Beispiel: Streckung\nf(x) = 2x streckt jeden Pfeil auf doppelte Länge.\nf(x + y) = 2x + 2y = f(x) + f(y).\nDer Beweis für allgemeine Faktoren ist nicht klausurrelevant.",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.3999,
+      0.1422
+     ],
+     "text": "Beispiel: Streckung"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.5782,
+      0.1974
+     ],
+     "text": "f(x) = 2x streckt jeden Pfeil auf doppelte Länge."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2146,
+      0.3986,
+      0.2486
+     ],
+     "text": "f(x + y) = 2x + 2y = f(x) + f(y)."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2658,
+      0.7242,
+      0.2999
+     ],
+     "text": "Der Beweis für allgemeine Faktoren ist nicht klausurrelevant."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "section": "Lineare Abbildungen",
+   "title": "Kern",
+   "kind": "definition",
+   "glance": "Kern = alles, was auf 0 landet.",
+   "example": {
+    "text": "Projektion auf die x-Achse: (0; 5) → (0; 0). Also liegt (0; 5) im Kern.",
+    "invented": true
+   },
+   "rule": "Kern finden: f(v) = 0 lösen.",
+   "more": "ker f sammelt alle Vektoren v mit f(v) = 0. Weil f(0) = 0 gilt, ist der Nullvektor immer dabei. Der Kern ist ein Unterraum.",
+   "next_hint": "Gleich: Projektion",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [
+    {
+     "bbox": [
+      0.0549,
+      0.3042,
+      0.3733,
+      0.3361
+     ],
+     "label": "Das ist die Definition"
+    }
+   ],
+   "keywords": [
+    "Kern",
+    "ker",
+    "Null",
+    "Nullvektor",
+    "Unterraum"
+   ],
+   "links": [],
+   "image": "slides/006.png",
+   "text": "Kern\nDefinition 2 (Kern)\nDer Kern von f ist die Menge aller Vektoren, die auf 0 abgebildet werden:\nker f = { v ∈ V | f(v) = 0 }.\nDer Kern ist immer ein Unterraum von V.",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.126,
+      0.1422
+     ],
+     "text": "Kern"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.1998,
+      0.2716,
+      0.2317
+     ],
+     "text": "Definition 2 (Kern)"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.2602,
+      0.8108,
+      0.2922
+     ],
+     "text": "Der Kern von f ist die Menge aller Vektoren, die auf 0 abgebildet werden:"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.3042,
+      0.3733,
+      0.3361
+     ],
+     "text": "ker f = { v ∈ V | f(v) = 0 }."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.3794,
+      0.5009,
+      0.4135
+     ],
+     "text": "Der Kern ist immer ein Unterraum von V."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "section": "Lineare Abbildungen",
+   "title": "Beispiel: Projektion auf die x-Achse",
+   "kind": "example",
+   "glance": "Lot auf die x-Achse fällen: y wird 0, x bleibt.",
+   "example": {
+    "text": "(4; 3) → (4; 0). (0; 3) → (0; 0).",
+    "invented": true
+   },
+   "rule": null,
+   "more": "f(x, y) = (x, 0) behält x und setzt y auf 0. Geometrisch: das Lot vom Pfeilende auf die x-Achse.",
+   "next_hint": "Gleich: Aufgabe zum Kern",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.524,
+      0.1974
+     ],
+     "label": "Die Abbildung"
+    }
+   ],
+   "keywords": [
+    "Projektion",
+    "x-Achse",
+    "Lot",
+    "Schatten",
+    "Licht"
+   ],
+   "links": [],
+   "image": "slides/007.png",
+   "text": "Beispiel: Projektion auf die x-Achse\nf(x, y) = (x, 0) fällt das Lot auf die x-Achse.\nDer Schatten eines Pfeils bei Licht genau von oben.\nv\nf(v)",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.6986,
+      0.1422
+     ],
+     "text": "Beispiel: Projektion auf die x-Achse"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.524,
+      0.1974
+     ],
+     "text": "f(x, y) = (x, 0) fällt das Lot auf die x-Achse."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2146,
+      0.6165,
+      0.2486
+     ],
+     "text": "Der Schatten eines Pfeils bei Licht genau von oben."
+    },
+    {
+     "bbox": [
+      0.6456,
+      0.6834,
+      0.6586,
+      0.7175
+     ],
+     "text": "v"
+    },
+    {
+     "bbox": [
+      0.6456,
+      0.8486,
+      0.6835,
+      0.8827
+     ],
+     "text": "f(v)"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "section": "Lineare Abbildungen",
+   "title": "Aufgabe",
+   "kind": "task",
+   "glance": "Aufgabe: Welche Vektoren schickt die Projektion auf 0?",
+   "example": null,
+   "rule": "Lösungsweg: (x, 0) = (0, 0) setzen. Was folgt für x, was für y?",
+   "more": "Du suchst alle (x, y) mit f(x, y) = (0, 0). Schreib f(x, y) aus und vergleiche die Einträge einzeln.",
+   "next_hint": "Gleich: Abbildungsmatrix",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [],
+   "keywords": [
+    "Aufgabe",
+    "Kern",
+    "Projektion",
+    "Begründen"
+   ],
+   "links": [],
+   "image": "slides/008.png",
+   "text": "Aufgabe\nWelche Vektoren liegen im Kern der Projektion f(x, y) = (x, 0)?\nBegründen Sie Ihre Antwort.",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.1934,
+      0.1422
+     ],
+     "text": "Aufgabe"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.7376,
+      0.1974
+     ],
+     "text": "Welche Vektoren liegen im Kern der Projektion f(x, y) = (x, 0)?"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2146,
+      0.3611,
+      0.2486
+     ],
+     "text": "Begründen Sie Ihre Antwort."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "section": "Matrizen",
+   "title": "Abbildungsmatrix",
+   "kind": "definition",
+   "glance": "Spalten der Matrix = Bilder der Einheitsvektoren.",
+   "example": {
+    "text": "f(e₁) = (2; 1), f(e₂) = (0; 3) → A = [2 0; 1 3].",
+    "invented": true
+   },
+   "rule": "Spalte i von A = f(eᵢ).",
+   "more": "Jede lineare Abbildung f: Rᵐ → Rⁿ ist Matrix mal Vektor. Die Matrix baust du, indem du die Bilder der Einheitsvektoren als Spalten nebeneinander schreibst.",
+   "next_hint": "Gleich: Matrix mal Vektor",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [],
+   "keywords": [
+    "Abbildungsmatrix",
+    "Matrix",
+    "Spalten",
+    "Einheitsvektoren",
+    "e1"
+   ],
+   "links": [],
+   "image": "slides/009.png",
+   "text": "Abbildungsmatrix\nJede lineare Abbildung f : Rᵐ → Rⁿ hat eine Matrix A mit f(x) = Ax.\nDie Spalten von A sind die Bilder der Einheitsvektoren:\nA = ( f(e₁) f(e₂) … f(eₘ) ).",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.3684,
+      0.1422
+     ],
+     "text": "Abbildungsmatrix"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.7687,
+      0.1974
+     ],
+     "text": "Jede lineare Abbildung f : Rᵐ → Rⁿ hat eine Matrix A mit f(x) = Ax."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2146,
+      0.6522,
+      0.2486
+     ],
+     "text": "Die Spalten von A sind die Bilder der Einheitsvektoren:"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2658,
+      0.3869,
+      0.2999
+     ],
+     "text": "A = ( f(e₁) f(e₂) … f(eₘ) )."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "section": "Matrizen",
+   "title": "Matrix mal Vektor",
+   "kind": "example",
+   "glance": "A·x = Spalten von A, gewichtet mit den Einträgen von x.",
+   "example": {
+    "text": "[1 2; 0 −5]·(2; 1) = 2·(1; 0) + 1·(2; −5) = (4; −5).",
+    "invented": false
+   },
+   "rule": "Muster: Eintrag × Spalte → aufaddieren → Ergebnis.",
+   "more": "Nimm den ersten Eintrag von x mal die erste Spalte, den zweiten mal die zweite Spalte und addiere alles.",
+   "next_hint": "Gleich: Reihenfolge beim Produkt",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [
+    {
+     "bbox": [
+      0.0549,
+      0.2602,
+      0.6182,
+      0.2922
+     ],
+     "label": "Die Rechenregel"
+    }
+   ],
+   "keywords": [
+    "Matrix mal Vektor",
+    "Rechenregel",
+    "Spalte",
+    "Eintrag",
+    "gewichtet"
+   ],
+   "links": [],
+   "image": "slides/010.png",
+   "text": "Matrix mal Vektor\nRechenregel\nAx = x₁·(Spalte 1) + x₂·(Spalte 2) + … + xₘ·(Spalte m)\nBeispiel: ( 1 2 ; 0 −5 ) · (2, 1) = 2·(1, 0) + 1·(2, −5) = (4, −5).",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.3732,
+      0.1422
+     ],
+     "text": "Matrix mal Vektor"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.1998,
+      0.2001,
+      0.2317
+     ],
+     "text": "Rechenregel"
+    },
+    {
+     "bbox": [
+      0.0549,
+      0.2602,
+      0.6182,
+      0.2922
+     ],
+     "text": "Ax = x₁·(Spalte 1) + x₂·(Spalte 2) + … + xₘ·(Spalte m)"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.3354,
+      0.7507,
+      0.3695
+     ],
+     "text": "Beispiel: ( 1 2 ; 0 −5 ) · (2, 1) = 2·(1, 0) + 1·(2, −5) = (4, −5)."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "section": "Matrizen",
+   "title": "Matrixprodukt ist nicht kommutativ",
+   "kind": "remark",
+   "glance": "AB ≠ BA meistens. Klammern versetzen ist erlaubt.",
+   "example": {
+    "text": "A = [0 1; 0 0], B = [0 0; 1 0]: AB = [1 0; 0 0], BA = [0 0; 0 1].",
+    "invented": true
+   },
+   "rule": "Reihenfolge nie tauschen, Klammern schon.",
+   "more": "Beim Matrixprodukt kommt es auf die Reihenfolge an. Assoziativ ist es aber: A(BC) = (AB)C.",
+   "next_hint": "Gleich: Zusammenfassung",
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [],
+   "keywords": [
+    "kommutativ",
+    "Reihenfolge",
+    "Klammern",
+    "Faktoren",
+    "tauschen"
+   ],
+   "links": [],
+   "image": "slides/011.png",
+   "text": "Matrixprodukt ist nicht kommutativ\nIm Allgemeinen gilt AB ≠ BA.\nKlammern dürfen versetzt werden: A(BC) = (AB)C.\nDie Reihenfolge der Faktoren darf man nicht tauschen.",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.7028,
+      0.1422
+     ],
+     "text": "Matrixprodukt ist nicht kommutativ"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.3695,
+      0.1974
+     ],
+     "text": "Im Allgemeinen gilt AB ≠ BA."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2146,
+      0.6055,
+      0.2486
+     ],
+     "text": "Klammern dürfen versetzt werden: A(BC) = (AB)C."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2658,
+      0.6547,
+      0.2999
+     ],
+     "text": "Die Reihenfolge der Faktoren darf man nicht tauschen."
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "section": "Matrizen",
+   "title": "Zusammenfassung",
+   "kind": "summary",
+   "glance": "Linear ↔ Matrix. Kern = was auf 0 landet.",
+   "example": null,
+   "rule": null,
+   "more": "Lineare Abbildungen erhalten Summen und Vielfache. Der Kern sammelt, was auf 0 fällt. Jede lineare Abbildung lässt sich als Matrix schreiben.",
+   "next_hint": null,
+   "exam_relevant": true,
+   "exam_note": null,
+   "highlights": [],
+   "keywords": [
+    "Zusammenfassung",
+    "Summen",
+    "Vielfache"
+   ],
+   "links": [],
+   "image": "slides/012.png",
+   "text": "Zusammenfassung\n• Linear: Summen und Vielfache bleiben erhalten.\n• Kern: alles, was auf 0 landet.\n• Jede lineare Abbildung ist Matrix mal Vektor.",
+   "blocks": [
+    {
+     "bbox": [
+      0.0385,
+      0.0911,
+      0.3883,
+      0.1422
+     ],
+     "text": "Zusammenfassung"
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.1633,
+      0.6011,
+      0.1974
+     ],
+     "text": "• Linear: Summen und Vielfache bleiben erhalten."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2146,
+      0.3884,
+      0.2486
+     ],
+     "text": "• Kern: alles, was auf 0 landet."
+    },
+    {
+     "bbox": [
+      0.0495,
+      0.2658,
+      0.5605,
+      0.2999
+     ],
+     "text": "• Jede lineare Abbildung ist Matrix mal Vektor."
+    }
+   ]
+  }
+ ],
+ "keyterms": [
+  "lineare Abbildungen",
+  "Demo",
+  "linear",
+  "Gleichungssysteme",
+  "Drehen",
+  "Spiegeln",
+  "Strecken",
+  "Definition",
+  "lineare Abbildung",
+  "Summe",
+  "Vielfache",
+  "lambda",
+  "Drehung",
+  "90 Grad",
+  "Uhrzeigersinn",
+  "gedreht",
+  "Pfeil",
+  "Streckung",
+  "Faktor",
+  "doppelt",
+  "Länge",
+  "Kern",
+  "ker",
+  "Null",
+  "Nullvektor",
+  "Unterraum",
+  "Projektion",
+  "x-Achse",
+  "Lot",
+  "Schatten",
+  "Licht",
+  "Aufgabe",
+  "Begründen",
+  "Abbildungsmatrix",
+  "Matrix",
+  "Spalten",
+  "Einheitsvektoren",
+  "Matrix mal Vektor",
+  "Rechenregel",
+  "Spalte",
+  "Eintrag",
+  "gewichtet",
+  "kommutativ",
+  "Reihenfolge",
+  "Klammern",
+  "Faktoren",
+  "tauschen",
+  "Zusammenfassung",
+  "Summen"
+ ],
+ "aspect": 1.3333,
+ "crop": [
+  0.0636,
+  0.9437
+ ],
+ "generated": {
+  "by": "hand",
+  "model": null,
+  "at": "2026-11-10T16:32:48+00:00"
+ },
+ "synthetic": true
+}
