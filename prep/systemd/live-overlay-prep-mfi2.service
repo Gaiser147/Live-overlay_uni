@@ -1,0 +1,19 @@
+# Installation: cp prep/systemd/live-overlay-prep-mfi2.* /etc/systemd/system/ && systemctl daemon-reload \
+#   && systemctl enable --now live-overlay-prep-mfi2.timer
+[Unit]
+Description=Live-Overlay: MfI II Handout aus Moodle holen, Karten (Claude Code) bauen, hochladen
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Environment=HOME=/root
+Environment=PATH=/root/.local/bin:/usr/local/bin:/usr/bin:/bin
+EnvironmentFile=/root/.config/lernbegleiter/secrets.env
+EnvironmentFile=/root/.config/live-overlay/secrets.env
+ExecStart=/root/Live-overlay_uni/prep/lecture_day.sh mathe-info-2 50680 w\\d+_handout\\.pdf 13:30 mathe-info-2_aktuell
+# 3 = bis 13:30 kein neues Handout (z. B. vorlesungsfreie Woche)
+SuccessExitStatus=3
+TimeoutStartSec=7h
+Nice=5

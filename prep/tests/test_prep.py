@@ -64,7 +64,9 @@ log = Path(__file__).with_name("calls.log")
 with log.open("a") as f:
     f.write(json.dumps({"retry": "Bitte korrigieren" in prompt, "tools": args[args.index("--tools") + 1]}) + "\n")
 long = "eins zwei drei vier fünf sechs sieben acht neun zehn elf zwölf dreizehn vierzehn"
-card = {"kind": "definition", "glance": long if "Bitte korrigieren" not in prompt else "Kern = alles, was auf 0 landet.",
+import os
+fixed = "Bitte korrigieren" in prompt and not os.environ.get("FAKE_ALWAYS_LONG")
+card = {"kind": "definition", "glance": long if not fixed else "Kern = alles, was auf 0 landet.",
         "example_text": "Beispiel (ausgedacht): f(x,y) = x.", "example_invented": True, "rule": "Kern prüfen: f(v) = 0.",
         "more": "Mehr.", "next_hint": "", "exam_relevant": False, "exam_note": "", "highlight_blocks": [],
         "keywords": ["Kern"], "links": []}
@@ -89,3 +91,17 @@ def test_claude_code_mode_retries_until_card_fits(tmp_path, monkeypatch):
     calls = [json.loads(line) for line in (bindir / "calls.log").read_text().splitlines()]
     assert len(calls) == 24 and sum(c["retry"] for c in calls) == 12  # je Folie: zu lang, dann korrigiert
     assert all(c["tools"] == "Read" for c in calls)
+
+
+def test_claude_code_mode_clips_after_three_misses(tmp_path, monkeypatch):
+    out = build(tmp_path)
+    bindir = tmp_path / "bin"
+    bindir.mkdir()
+    fake = bindir / "claude"
+    fake.write_text(FAKE_CLAUDE)
+    fake.chmod(0o755)
+    monkeypatch.setenv("PATH", f"{bindir}:" + __import__("os").environ["PATH"])
+    monkeypatch.setenv("FAKE_ALWAYS_LONG", "1")
+    deck = make_deck.build(out, "demo", "2026-11-10", "claude-code", None, ROOT / "profile.md", 3)
+    assert all(len(s["glance"].split()) <= 12 and s["glance"].endswith("…") for s in deck["slides"])
+    assert len((bindir / "calls.log").read_text().splitlines()) == 36

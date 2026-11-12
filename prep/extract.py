@@ -83,16 +83,29 @@ def repeated_keys(pages: list[dict]) -> set[str]:
     return {k for k, v in c.items() if v > limit}
 
 
+def merge_nav_words(spans: list[dict]) -> list[dict]:
+    """Manche Beamer-PDFs setzen jedes Wort eines Navigationseintrags als eigenen Span.
+    Nah beieinander (Lücke < Zeilenhöhe) und gleichfarbig = ein Eintrag; zwischen Einträgen ist viel Platz."""
+    out: list[dict] = []
+    for s in spans:
+        prev = out[-1] if out else None
+        if prev and prev["color"] == s["color"] and s["bbox"][0] - prev["bbox"][2] < (prev["bbox"][3] - prev["bbox"][1]):
+            out[-1] = dict(prev, text=f"{prev['text']} {s['text']}", bbox=(prev["bbox"][0], prev["bbox"][1], s["bbox"][2], max(prev["bbox"][3], s["bbox"][3])))
+        else:
+            out.append(s)
+    return out
+
+
 def nav_sections(pages: list[dict]) -> tuple[list[str], list[str | None]]:
     """Abschnittsnamen aus der Navigationsleiste und der aktive Abschnitt je Seite."""
     names: list[str] = []
     active: list[str | None] = []
     for p in pages:
-        spans = [s for b in p["blocks"] if b["bbox"][3] <= HEADER_BAND for s in b["spans"]]
+        spans = [s for b in p["blocks"] if b["bbox"][3] <= HEADER_BAND for s in b["spans"] if s["text"]]
         if not spans:
             active.append(None)
             continue
-        spans.sort(key=lambda s: s["bbox"][0])
+        spans = merge_nav_words(sorted(spans, key=lambda s: s["bbox"][0]))
         if not names:
             names = [s["text"] for s in spans]
         lum = [_luma(s["color"]) for s in spans]

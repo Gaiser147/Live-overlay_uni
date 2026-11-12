@@ -42,6 +42,7 @@ def main() -> None:
     ap.add_argument("--pdf", type=Path, required=True)
     ap.add_argument("--mode", choices=make_deck.MODES, default=make_deck.default_mode())
     ap.add_argument("--upload", action="store_true")
+    ap.add_argument("--alias", help="zusätzlich unter decks/<alias>/deck.json ablegen (feste Adresse für die App, Bilder zeigen aufs datierte Deck)")
     a = ap.parse_args()
 
     out = ROOT / "lectures" / a.course / a.date
@@ -64,6 +65,10 @@ def main() -> None:
     if profile.exists():
         put(f"{proxy}/profile", profile.read_bytes(), "text/markdown", key)
     print(f"Hochgeladen. Deck-URL für die App: {proxy}/decks/{deck_id}/deck.json")
+    if a.alias:
+        alias = dict(deck, slides=[dict(s, image=f"{proxy}/decks/{deck_id}/{s['image']}") if s.get("image") else s for s in deck["slides"]])
+        put(f"{proxy}/decks/{a.alias}/deck.json", json.dumps(alias, ensure_ascii=False).encode(), "application/json", key)
+        print(f"Feste Adresse: {proxy}/decks/{a.alias}/deck.json")
 
 
 if __name__ == "__main__":

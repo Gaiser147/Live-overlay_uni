@@ -52,6 +52,8 @@ export ANTHROPIC_API_KEY=… PROXY_URL=https://live-overlay.….workers.dev PI_K
     --pdf ../lectures/mathe-info-2/2026-11-17/handout.pdf --upload
 ```
 
+**Automatisch:** `prep/lecture_day.sh` wartet bis 30 min vor Beginn auf ein höchstens 72 h altes Handout, baut die Karten und lädt sie hoch. Für MfI II liegt dafür ein systemd-Timer in `prep/systemd/` (dienstags 08:00). Mit `--alias mathe-info-2_aktuell` gibt es zusätzlich eine feste Adresse `…/decks/mathe-info-2_aktuell/deck.json`, die du nur einmal in der App einträgst. Ihre Bilder zeigen auf das datierte Deck, deshalb veraltet der Cache nicht.
+
 `run.py` gibt die Deck-URL aus. Die trägst du in der App unter Einstellungen → Vorlesung ein, oder du rufst die App einmal mit `?deck=<url>` auf. Die Karten erzeugt Claude Sonnet 5.5, eine Anfrage pro Folie, parallel und mit Prompt-Cache, für 34 Folien rechnerisch unter 5 Minuten. Ohne `ANTHROPIC_API_KEY` baut die lokal angemeldete Claude-Code-CLI die Karten (`--mode claude-code`, `claude -p` mit Sonnet, höchstens 3 Folien parallel, also langsamer). Nur wenn auch `claude` fehlt, entstehen heuristische Karten: Der Tracker funktioniert damit, die Karten sind aber nur eine Notlösung.
 
 ### 3. Im Hörsaal
@@ -69,7 +71,7 @@ Dann aufs Mikrofon-Symbol oben rechts tippen. Ohne Netz laufen Karten und Blätt
     --transcript ../lectures/mathe-info-2/2026-11-17/twinmind.txt
 ```
 
-Das Skript holt das Protokoll vom Proxy und schreibt `post/nachbereitung.md`, `post/heimfahrt.md` (Text für die Audio-Zusammenfassung) und `post/quest.json` für die Wochen-Quest. Außerdem ergänzt es `profile.md`.
+Ohne `ANTHROPIC_API_KEY` schreibt die lokal angemeldete Claude-Code-CLI die Erklärungen, Fragen und den Heimfahrt-Text (`--mode claude-code`). Das Skript holt das Protokoll vom Proxy und schreibt `post/nachbereitung.md`, `post/heimfahrt.md` (Text für die Audio-Zusammenfassung) und `post/quest.json` für die Wochen-Quest. Außerdem ergänzt es `profile.md`.
 
 ## Tests
 

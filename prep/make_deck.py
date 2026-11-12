@@ -262,6 +262,7 @@ def claude_code_card(system: str, page: dict, prev_title: str | None, next_title
     prompt += "\n\nGib nur die Karte als strukturierte Ausgabe zurück."
     cost = 0.0
     hint = ""
+    last: dict | None = None
     for attempt in range(3):
         cmd = [
             "claude", "-p", prompt + hint,
@@ -291,11 +292,17 @@ def claude_code_card(system: str, page: dict, prev_title: str | None, next_title
         problems = card_problems(card)
         if not problems:
             return card, cost
+        last = card
         hint = (
             "\n\nDein letzter Entwurf war:\n" + json.dumps(card, ensure_ascii=False)
-            + "\nBitte korrigieren: " + "; ".join(problems) + ". Gib die ganze Karte neu aus."
+            + "\nBitte korrigieren: " + "; ".join(problems) + ". Gezählt wird jedes durch Leerzeichen getrennte Stück,"
+            " auch Zeichen wie =, +, →, ≠ und einzelne Buchstaben. Kürze deutlich unter die Grenze und gib die ganze Karte neu aus."
         )
-    raise RuntimeError(f"Folie {page['n']}: keine gültige Karte von Claude Code nach 3 Versuchen")
+    if last is not None:
+        # Lieber gekürzt als ein abgebrochener Lauf am Vorlesungstag; „…“ zählt als ein Stück.
+        print(f"Folie {page['n']}: nach 3 Versuchen gekürzt ({'; '.join(card_problems(last))})", file=sys.stderr)
+        return dict(last, glance=clip_words(last["glance"], 11), example_text=clip_words(last["example_text"], 24), more=clip_words(last["more"], 79)), cost
+    raise RuntimeError(f"Folie {page['n']}: keine Karte von Claude Code nach 3 Versuchen")
 
 
 # ---------------------------------------------------------------- Zusammenbau
