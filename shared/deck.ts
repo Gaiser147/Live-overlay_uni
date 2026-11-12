@@ -69,7 +69,7 @@ export interface Deck {
   aspect?: number;
   /** Sichtbarer Bereich [oben, unten] als Anteil der Höhe (ohne Navigationsleiste und Fußzeile). */
   crop?: [number, number] | null;
-  generated?: { by: "claude" | "heuristic" | "hand"; model?: string; at: string };
+  generated?: { by: "claude" | "claude-code" | "heuristic" | "hand"; model?: string; at: string };
   /** true = erfundene Demo-Daten, keine echte Vorlesung. */
   synthetic?: boolean;
 }

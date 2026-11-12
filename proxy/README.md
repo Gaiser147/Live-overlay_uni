@@ -30,7 +30,7 @@ Der Worker liefert unter derselben Adresse auch die App aus (`app/dist`). Decks,
 printf 'ANTHROPIC_API_KEY=test\nANTHROPIC_BASE_URL=http://127.0.0.1:8899\nAPP_KEY=app-test\nPI_KEY=pi-test\n' > .dev.vars
 node test/mock-anthropic.mjs 8899 &           # Ersatz für die Messages-API
 npx wrangler dev --port 8790 &
-node test/e2e.mjs                             # 17 Prüfungen: Schlüssel, Deck, WebSocket, C/D, Protokoll, Cache, Fallback
+node test/e2e.mjs                             # 18 Prüfungen: Schlüssel, Deck, WebSocket, C/D, Protokoll, Cache, Fallback
 ```
 
 In der App dann `http://127.0.0.1:8790` als Proxy-Adresse und `app-test` als Schlüssel eintragen.

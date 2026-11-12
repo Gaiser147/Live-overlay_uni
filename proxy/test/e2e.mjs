@@ -19,6 +19,7 @@ check("token ohne STT-Schlüssel → 501", tk.status === 501);
 const put = await fetch(`${base}/decks/demo-e2e/deck.json`, { method: "PUT", headers: { authorization: "Bearer pi-test", "content-type": "application/json" }, body: JSON.stringify(deck) });
 check("Deck hochladen (Pi)", put.ok);
 check("Deck ohne Schlüssel → 401", (await fetch(`${base}/decks/demo-e2e/deck.json`)).status === 401);
+check("Mitgeliefertes Demo-Deck ohne Schlüssel", (await fetch(`${base}/decks/demo/deck.json`)).ok);
 const got = await fetch(`${base}/decks/demo-e2e/deck.json`, { headers: { authorization: "Bearer app-test" } });
 check("Deck mit App-Schlüssel", got.ok && (await got.json()).slides.length === deck.slides.length);
 const bad = await new Promise((res) => {

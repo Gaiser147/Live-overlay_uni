@@ -52,7 +52,7 @@ export ANTHROPIC_API_KEY=… PROXY_URL=https://live-overlay.….workers.dev PI_K
     --pdf ../lectures/mathe-info-2/2026-11-17/handout.pdf --upload
 ```
 
-`run.py` gibt die Deck-URL aus. Die trägst du in der App unter Einstellungen → Vorlesung ein, oder du rufst die App einmal mit `?deck=<url>` auf. Die Karten erzeugt Claude Sonnet 5.5, eine Anfrage pro Folie, parallel und mit Prompt-Cache, für 34 Folien rechnerisch unter 5 Minuten. Ohne `ANTHROPIC_API_KEY` entstehen heuristische Karten: Der Tracker funktioniert damit, die Karten sind aber nur eine Notlösung.
+`run.py` gibt die Deck-URL aus. Die trägst du in der App unter Einstellungen → Vorlesung ein, oder du rufst die App einmal mit `?deck=<url>` auf. Die Karten erzeugt Claude Sonnet 5.5, eine Anfrage pro Folie, parallel und mit Prompt-Cache, für 34 Folien rechnerisch unter 5 Minuten. Ohne `ANTHROPIC_API_KEY` baut die lokal angemeldete Claude-Code-CLI die Karten (`--mode claude-code`, `claude -p` mit Sonnet, höchstens 3 Folien parallel, also langsamer). Nur wenn auch `claude` fehlt, entstehen heuristische Karten: Der Tracker funktioniert damit, die Karten sind aber nur eine Notlösung.
 
 ### 3. Im Hörsaal
 

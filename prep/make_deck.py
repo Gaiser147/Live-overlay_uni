@@ -1,11 +1,14 @@
 """Aus pages.json (extract.py) eine deck.json mit einer Karte pro Folie erzeugen.
 
 Aufruf:
-    python prep/make_deck.py out_dir --course mathe-info-2 --date 2026-11-10 [--mode claude|heuristic]
+    python prep/make_deck.py out_dir --course mathe-info-2 --date 2026-11-10 [--mode claude|claude-code|heuristic]
                              [--cards cards.json] [--profile profile.md] [--workers 6]
 
 --mode claude      Ein Aufruf je Folie (Bild + Text + Sprachprofil + Nachbartitel), normale API (kein Batch),
                    damit ein am Vorlesungstag hochgeladenes Handout in wenigen Minuten fertig ist.
+--mode claude-code Wie claude, aber über die lokal angemeldete Claude-Code-CLI (`claude -p`, Sonnet) statt
+                   über einen API-Schlüssel. Höchstens 3 Folien parallel. Standard, wenn kein ANTHROPIC_API_KEY
+                   gesetzt ist und `claude` im PATH liegt.
 --mode heuristic   Ohne Sprachmodell: Titel, erster Satz, Schlüsselwörter aus dem Text. Für den Tracker reicht das,
                    die Karten sind dann nur Notlösung.
 --cards            Handgeschriebene Karten (Liste von Objekten mit "n"), überschreiben die erzeugten Felder.
@@ -198,13 +201,7 @@ def claude_card(client, system: str, page: dict, prev_title: str | None, next_ti
             raise RuntimeError(f"Folie {page['n']}: Anfrage abgelehnt")
         text = next(b.text for b in resp.content if b.type == "text")
         card = json.loads(text)
-        problems = []
-        if words(card["glance"]) > 12:
-            problems.append(f"glance hat {words(card['glance'])} Wörter, erlaubt sind 12")
-        if words(card["example_text"]) > 25:
-            problems.append(f"example_text hat {words(card['example_text'])} Wörter, erlaubt sind 25")
-        if words(card["more"]) > 80:
-            problems.append(f"more hat {words(card['more'])} Wörter, erlaubt sind 80")
+        problems = card_problems(card)
         if not problems:
             return card, usage
         messages = [
@@ -213,6 +210,92 @@ def claude_card(client, system: str, page: dict, prev_title: str | None, next_ti
             {"role": "user", "content": "Bitte korrigieren: " + "; ".join(problems) + ". Gib die ganze Karte neu aus."},
         ]
     raise RuntimeError(f"Folie {page['n']}: keine gültige Karte nach 3 Versuchen")
+
+
+def card_problems(card: dict) -> list[str]:
+    """Wortgrenzen der Karte; leere Liste = in Ordnung."""
+    problems = []
+    if words(card["glance"]) > 12:
+        problems.append(f"glance hat {words(card['glance'])} Wörter, erlaubt sind 12")
+    if words(card["example_text"]) > 25:
+        problems.append(f"example_text hat {words(card['example_text'])} Wörter, erlaubt sind 25")
+    if words(card["more"]) > 80:
+        problems.append(f"more hat {words(card['more'])} Wörter, erlaubt sind 80")
+    return problems
+
+
+# ---------------------------------------------------------------- Claude Code (ohne API-Schlüssel)
+
+CLAUDE_CODE_MODEL = "sonnet"
+CLAUDE_CODE_TIMEOUT_S = 240
+MODES = ["claude", "claude-code", "heuristic"]
+
+
+def default_mode() -> str:
+    """API-Schlüssel → claude; sonst angemeldete Claude-Code-CLI → claude-code; sonst heuristic."""
+    import shutil
+
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        return "claude"
+    if shutil.which("claude"):
+        return "claude-code"
+    return "heuristic"
+
+
+def claude_code_card(system: str, page: dict, prev_title: str | None, next_title: str | None, img_dir: Path) -> tuple[dict, float]:
+    """Eine Karte über die lokal angemeldete Claude-Code-CLI (`claude -p`) erzeugen.
+
+    Claude Code bekommt nur das Werkzeug Read und nur Zugriff auf img_dir, damit es das Folienbild ansehen kann.
+    Rückgabe: Karte und die von Claude Code gemeldeten Kosten (rechnerisch, beim Abo nur zur Info).
+    """
+    import subprocess
+
+    blocks = "\n".join(f"[{i}] {b['text']}" for i, b in enumerate(page["blocks"]))
+    img = (img_dir / page["image"]).resolve()
+    prompt = (
+        f"Folie {page['n']} – Titel: {page['title']}\nAbschnitt: {page['section']}\n"
+        f"Vorherige Folie: {prev_title or '–'}\nNächste Folie: {next_title or '–'}\n\n"
+        f"Textblöcke:\n{blocks or '(kein Text)'}"
+    )
+    if img.exists():
+        prompt += f"\n\nFolienbild (mit dem Read-Werkzeug ansehen, sonst nichts lesen): {img}"
+    prompt += "\n\nGib nur die Karte als strukturierte Ausgabe zurück."
+    cost = 0.0
+    hint = ""
+    for attempt in range(3):
+        cmd = [
+            "claude", "-p", prompt + hint,
+            "--model", CLAUDE_CODE_MODEL,
+            "--system-prompt", system,
+            "--output-format", "json",
+            "--json-schema", json.dumps(CARD_SCHEMA),
+            "--tools", "Read",
+            "--allowedTools", "Read",
+            "--add-dir", str(img_dir.resolve()),
+            "--no-session-persistence",
+        ]
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=CLAUDE_CODE_TIMEOUT_S, cwd=img_dir, stdin=subprocess.DEVNULL)
+        except subprocess.TimeoutExpired:
+            continue
+        try:
+            out = json.loads(proc.stdout)
+        except json.JSONDecodeError:
+            time.sleep(3 * (attempt + 1))
+            continue
+        cost += float(out.get("total_cost_usd") or 0)
+        card = out.get("structured_output")
+        if out.get("is_error") or not isinstance(card, dict):
+            time.sleep(3 * (attempt + 1))
+            continue
+        problems = card_problems(card)
+        if not problems:
+            return card, cost
+        hint = (
+            "\n\nDein letzter Entwurf war:\n" + json.dumps(card, ensure_ascii=False)
+            + "\nBitte korrigieren: " + "; ".join(problems) + ". Gib die ganze Karte neu aus."
+        )
+    raise RuntimeError(f"Folie {page['n']}: keine gültige Karte von Claude Code nach 3 Versuchen")
 
 
 # ---------------------------------------------------------------- Zusammenbau
@@ -277,6 +360,20 @@ def build(out_dir: Path, course: str, date: str, mode: str, cards_path: Path | N
         cards = [one(0)]
         with ThreadPoolExecutor(max_workers=workers) as ex:
             cards += list(ex.map(one, range(1, len(pages))))
+    elif mode == "claude-code":
+        system = system_prompt(profile_path.read_text(encoding="utf-8") if profile_path.exists() else "")
+        cost_total = [0.0]
+
+        def one_cc(i: int) -> dict:
+            card, c = claude_code_card(system, pages[i], titles[i - 1] if i else None, titles[i + 1] if i + 1 < len(pages) else None, out_dir)
+            cost_total[0] += c
+            print(f"  Folie {pages[i]['n']} fertig", file=sys.stderr)
+            return card
+
+        # Jeder claude-Prozess braucht einige hundert MB; mehr als 3 parallel sprengen kleine Rechner.
+        with ThreadPoolExecutor(max_workers=max(1, min(workers, 3))) as ex:
+            cards = list(ex.map(one_cc, range(len(pages))))
+        print(f"Claude Code: rechnerisch {cost_total[0]:.2f} $ (beim Abo nicht berechnet)", file=sys.stderr)
     else:
         cards = [
             heuristic_card(p, guess_kind(p, len(pages)), kws[i], titles[i + 1] if i + 1 < len(pages) else None)
@@ -312,7 +409,7 @@ def build(out_dir: Path, course: str, date: str, mode: str, cards_path: Path | N
         "keyterms": keyterms[:100],
         "aspect": pages_doc.get("aspect", 4 / 3),
         "crop": pages_doc.get("crop"),
-        "generated": {"by": "claude" if mode == "claude" else "heuristic", "model": MODEL if mode == "claude" else None,
+        "generated": {"by": mode, "model": {"claude": MODEL, "claude-code": f"claude-code:{CLAUDE_CODE_MODEL}"}.get(mode),
                       "at": datetime.now(timezone.utc).isoformat(timespec="seconds")},
     }
     (out_dir / "deck.json").write_text(json.dumps(deck, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -330,7 +427,7 @@ def main() -> None:
     ap.add_argument("out_dir", type=Path)
     ap.add_argument("--course", required=True)
     ap.add_argument("--date", required=True)
-    ap.add_argument("--mode", choices=["claude", "heuristic"], default="claude" if os.environ.get("ANTHROPIC_API_KEY") else "heuristic")
+    ap.add_argument("--mode", choices=MODES, default=default_mode())
     ap.add_argument("--cards", type=Path)
     ap.add_argument("--profile", type=Path, default=ROOT / "profile.md")
     ap.add_argument("--workers", type=int, default=6)

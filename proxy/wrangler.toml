@@ -18,10 +18,10 @@ class_name = "LectureSession"
 tag = "v1"
 new_sqlite_classes = ["LectureSession"]
 
-# wrangler kv namespace create DECKS  → id hier eintragen
+# wrangler kv namespace create DECKS (angelegt 2026-11-12)
 [[kv_namespaces]]
 binding = "DECKS"
-id = "00000000000000000000000000000000"
+id = "a95aac0845854a0ea81eae3943a13af8"
 
 [[rules]]
 type = "Text"

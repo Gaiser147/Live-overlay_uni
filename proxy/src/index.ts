@@ -92,6 +92,12 @@ export async function handle(req: Request, env: Env): Promise<Response> {
       await env.DECKS.put(key, await req.arrayBuffer(), { metadata: { type: req.headers.get("content-type") ?? "application/octet-stream" } });
       return json(env, { ok: true, key });
     }
+    if (req.method === "GET" && env.ASSETS) {
+      // Mitgelieferte Decks (app/public/decks, z. B. die synthetische Demo) sind öffentlich wie die App selbst.
+      // Hochgeladene Handouts liegen nur in KV und brauchen weiter einen Schlüssel.
+      const asset = await env.ASSETS.fetch(req);
+      if (asset.ok) return asset;
+    }
     if (req.method === "GET" && env.DECKS) {
       requireKey(env, bearer(req), "APP_KEY", "PI_KEY");
       const hit = await env.DECKS.getWithMetadata<{ type: string }>(key, "arrayBuffer");

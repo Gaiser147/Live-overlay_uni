@@ -67,7 +67,7 @@ def load_log(args) -> list[dict]:
         lines = Path(args.log).read_text(encoding="utf-8").splitlines()
     else:
         proxy = os.environ["PROXY_URL"].rstrip("/")
-        req = urllib.request.Request(f"{proxy}/log/{args.session}", headers={"authorization": f"Bearer {os.environ['PI_KEY']}"})
+        req = urllib.request.Request(f"{proxy}/log/{args.session}", headers={"authorization": f"Bearer {os.environ['PI_KEY']}", "user-agent": "live-overlay-post/1"})
         with urllib.request.urlopen(req, timeout=30) as r:
             lines = r.read().decode().splitlines()
     return [json.loads(l) for l in lines if l.strip()]

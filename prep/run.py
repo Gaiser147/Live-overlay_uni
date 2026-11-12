@@ -3,7 +3,7 @@
     python prep/run.py --course mathe-info-2 --date 2026-11-10 --pdf lectures/mathe-info-2/2026-11-10/handout.pdf [--upload]
 
 1. extract.py: Text, Blöcke, Bilder je Folie
-2. make_deck.py: Karten (Claude, sonst heuristisch)
+2. make_deck.py: Karten (Claude per API, sonst Claude Code per `claude -p`, sonst heuristisch)
 3. --upload: deck.json und Folienbilder zum Cloud-Proxy (PROXY_URL, PI_KEY), damit das Tablet sie
    auch ohne Heimnetz laden kann. Die Deck-ID bekommt einen Zufallsanteil.
 
@@ -29,7 +29,7 @@ import make_deck  # noqa: E402
 
 
 def put(url: str, data: bytes, ctype: str, key: str) -> None:
-    req = urllib.request.Request(url, data=data, method="PUT", headers={"authorization": f"Bearer {key}", "content-type": ctype})
+    req = urllib.request.Request(url, data=data, method="PUT", headers={"authorization": f"Bearer {key}", "content-type": ctype, "user-agent": "live-overlay-prep/1"})
     with urllib.request.urlopen(req, timeout=60) as r:
         if r.status >= 300:
             raise RuntimeError(f"Upload {url}: {r.status}")
@@ -40,7 +40,7 @@ def main() -> None:
     ap.add_argument("--course", required=True)
     ap.add_argument("--date", required=True)
     ap.add_argument("--pdf", type=Path, required=True)
-    ap.add_argument("--mode", choices=["claude", "heuristic"], default="claude" if os.environ.get("ANTHROPIC_API_KEY") else "heuristic")
+    ap.add_argument("--mode", choices=make_deck.MODES, default=make_deck.default_mode())
     ap.add_argument("--upload", action="store_true")
     a = ap.parse_args()
 

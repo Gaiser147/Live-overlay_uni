@@ -85,6 +85,8 @@ export class LectureSession extends DurableObject<Env> {
         return this.log(msg.at > 1e12 ? msg.at : Date.now(), msg.event);
       case "note_req": {
         if (!this.deck) return this.send(ws, { t: "error", id: msg.id, message: "Kein Deck" });
+        // Ohne Claude-Schlüssel gibt es keine Live-Notiz; „none“ ist ohnehin die Standardantwort.
+        if (!this.env.ANTHROPIC_API_KEY) return this.send(ws, { t: "note", id: msg.id, result: { type: "none", text: "", confidence: 0 }, latencyMs: 0 });
         const t0 = Date.now();
         const { result, usage } = await liveNote(this.client(), this.deck, await this.getProfile(), msg.n, msg.lines);
         const latencyMs = Date.now() - t0;
